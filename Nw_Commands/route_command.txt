@@ -1,0 +1,67 @@
+
+Default gateway
+=================
+The default gateway is the path used to pass information when the device doesn’t know where
+the destination is. More directly, a default gateway is a router that connects our host to 
+remote network segments. It’s the exit point for all the packets in your network that have
+destinations outside our network.
+
+route command: -
+===============
+route - show / manipulate the IP routing table.
+
+When the add or del options are used, route modifies the routing tables. Without these options,
+route displays the current contents of the routing tables.
+
+1. Display your current routing table
+--------------------------------------
+	# route
+
+	or
+
+	# route -n
+
+2. Add route rule command
+-----------------------------
+Syntax: -
+	# route add -net <ip_address> netmask <netmask_address_here> gw <gw_address_here>
+
+Ex.: Route all traffic via 192.168.1.254 gateway connected via eth0 network interface:
+
+	# route add default gw 192.168.1.254 eth0
+
+Do the same using "ip" command: -
+	# ip route add 192.168.1.0/24 dev eth0
+	
+=> Verify newly added route ip address in the Linux kernel routing table
+
+	# route -n
+	
+	or
+	
+	# ip route list
+	
+3. Verify new routing is working or not
+----------------------------------------
+Use the ping command to verify connectivity to your router or external network:
+	# ping your-router-ip-here
+	# ping your-ISPs-Gateway-ip-here
+	# ping 192.168.1.254
+	# ping www.cyberciti.biz
+
+We should able to ping public IP address too. For instance:
+	# ping 1.1.1.1
+	# ping 8.8.8.8
+
+4. Deleting route rule command
+--------------------------------
+Sometimes we need to delete route. The syntax is:
+	# route del -net <ip_address_here> netmask <netmask_address_here> dev <gw_interface_here>
+
+To delete the default route, labeled “default” or 0.0.0.0, from the current routing table, type:
+	# route del default
+
+
+References: -
+-------------
+1. https://www.cyberciti.biz/faq/linux-route-add/
