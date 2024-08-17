@@ -1,0 +1,14 @@
+
+
+Top Know in network: -
+-------------------------
+
+1) Use of "route" command.
+
+    # ifconfig dummy vlite
+    # route add vlite
+
+2) Linux Bridge: -
+
+	
+	   
