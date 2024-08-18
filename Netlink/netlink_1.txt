@@ -1,0 +1,108 @@
+Netlink: -
+==========
+netlink: - communication between kernel and user space (AF_NETLINK)
+
+Netlink is used to transfer information between the kernel and user-space processes. It consists of a standard sockets-based
+interface for user space processes and an internal kernel API for kernel modules.
+
+User space API: -
+  #include <asm/types.h>
+  #include <sys/socket.h>
+  #include <linux/netlink.h>
+  
+  netlink_socket = socket(AF_NETLINK, socket_type, netlink_family);
+
+Netlink is a datagram-oriented service.  Both SOCK_RAW and
+SOCK_DGRAM are valid values for socket_type.  However, the
+netlink protocol does not distinguish between datagram and raw
+sockets.
+
+netlink_family selects the kernel module or netlink group to
+communicate with.  The currently assigned netlink families are:
+
+NETLINK_ROUTE
+      Receives routing and link updates and may be used to
+      modify the routing tables (both IPv4 and IPv6), IP
+      addresses, link parameters, neighbor setups, queueing
+      disciplines, traffic classes, and packet classifiers (see
+      rtnetlink(7)).
+
+NETLINK_W1 (Linux 2.6.13 to Linux 2.16.17)
+      Messages from 1-wire subsystem.
+
+NETLINK_USERSOCK
+      Reserved for user-mode socket protocols.
+
+NETLINK_FIREWALL (up to and including Linux 3.4)
+      Transport IPv4 packets from netfilter to user space.  Used
+      by ip_queue kernel module.  After a long period of being
+      declared obsolete (in favor of the more advanced
+      nfnetlink_queue feature), NETLINK_FIREWALL was removed in
+      Linux 3.5.
+
+NETLINK_SOCK_DIAG (since Linux 3.3)
+      Query information about sockets of various protocol
+      families from the kernel (see sock_diag(7)).
+
+NETLINK_INET_DIAG (since Linux 2.6.14)
+      An obsolete synonym for NETLINK_SOCK_DIAG.
+
+NETLINK_NFLOG (up to and including Linux 3.16)
+      Netfilter/iptables ULOG.
+
+NETLINK_XFRM
+      IPsec.
+
+NETLINK_SELINUX (since Linux 2.6.4)
+      SELinux event notifications.
+
+NETLINK_ISCSI (since Linux 2.6.15)
+      Open-iSCSI.
+
+NETLINK_AUDIT (since Linux 2.6.6)
+      Auditing.
+
+NETLINK_FIB_LOOKUP (since Linux 2.6.13)
+      Access to FIB lookup from user space.
+
+NETLINK_CONNECTOR (since Linux 2.6.14)
+      Kernel connector.  See
+      Documentation/driver-api/connector.rst (or
+      /Documentation/connector/connector.*  in Linux 5.2 and
+      earlier) in the Linux kernel source tree for further
+      information.
+
+NETLINK_NETFILTER (since Linux 2.6.14)
+      Netfilter subsystem.
+
+NETLINK_SCSITRANSPORT (since Linux 2.6.19)
+      SCSI Transports.
+
+NETLINK_RDMA (since Linux 3.0)
+      Infiniband RDMA.
+
+NETLINK_IP6_FW (up to and including Linux 3.4)
+      Transport IPv6 packets from netfilter to user space.  Used
+      by ip6_queue kernel module.
+
+NETLINK_DNRTMSG
+      DECnet routing messages.
+
+NETLINK_KOBJECT_UEVENT (since Linux 2.6.10)
+      Kernel messages to user space.
+
+NETLINK_GENERIC (since Linux 2.6.15)
+      Generic netlink family for simplified netlink usage.
+
+NETLINK_CRYPTO (since Linux 3.2)
+      Netlink interface to request information about ciphers
+      registered with the kernel crypto API as well as allow
+      configuration of the kernel crypto API.
+
+Netlink messages consist of a byte stream with one or multiple
+nlmsghdr headers and associated payload.  The byte stream should
+be accessed only with the standard NLMSG_* macros.
+
+
+Reference: - 
+1. https://man7.org/linux/man-pages/man7/netlink.7.html
