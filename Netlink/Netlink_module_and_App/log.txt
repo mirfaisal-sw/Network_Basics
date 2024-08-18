@@ -1,0 +1,9 @@
+
+
+# insmod netlink_kernel_module_test.ko
+
+
+# ./netlink_app
+Sending message to kernel
+Waiting for message from kernel
+Received message payload: Hello Mir, I am from kernel
