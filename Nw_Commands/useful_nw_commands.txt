@@ -1,0 +1,1278 @@
+
+
+console:/ # iptables -P INPUT ACCEPT
+ OUTPUT ACCEPT
+iptables -P FORWARD Aconsole:/ # iptables -P OUTPUT ACCEPT
+CCEPT
+
+## Then flush the rules:
+iptaconsole:/ # iptables -P FORWARD ACCEPT
+ables -F FORWARDconsole:/ #
+console:/ # ## Then flush the rules:
+console:/ # iptables -F INPUT
+console:/ # iptables -F OUTPUT
+console:/ # iptables -F FORWARD
+console:/ #
+console:/ #
+console:/ # ping -I ethPhy0 192.168.2.6
+PING 192.168.2.6 (192.168.2.6) from 192.168.2.5 ethPhy0: 56(84) bytes of data.
+^C
+--- 192.168.2.6 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2029ms
+
+1|console:/ # ip rules
+Object "rules" is unknown, try "ip help".
+1|console:/ # ip rule
+0:      from all lookup local
+0:      from all lookup main
+0:      from all fwmark 0x0/0xffff uidrange 0-10000 lookup main
+10000:  from all fwmark 0xc0000/0xd0000 lookup legacy_system
+10500:  from all iif lo oif dummy0 uidrange 0-0 lookup dummy0
+13000:  from all fwmark 0x10063/0x1ffff iif lo lookup local_network
+14000:  from all iif lo oif dummy0 lookup dummy0
+15000:  from all fwmark 0x0/0x10000 lookup legacy_system
+16000:  from all fwmark 0x0/0x10000 lookup legacy_network
+17000:  from all fwmark 0x0/0x10000 lookup local_network
+32000:  from all unreachable
+console:/ # ip route
+10.23.0.0/24 dev eth0 proto kernel scope link src 10.23.0.2
+192.168.2.0/24 dev ethPhy0 proto kernel scope link src 192.168.2.5
+console:/ # ip addr show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: dummy0: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/ether 42:9f:ce:8c:62:e6 brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::409f:ceff:fe8c:62e6/64 scope link
+       valid_lft forever preferred_lft forever
+3: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether aa:aa:aa:aa:aa:b0 brd ff:ff:ff:ff:ff:ff
+    inet 10.23.0.2/24 brd 10.23.0.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a8aa:aaff:feaa:aab0/64 scope link
+       valid_lft forever preferred_lft forever
+4: ethPhy0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 2a:ec:7f:1a:04:21 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.2.5/24 brd 192.168.2.255 scope global ethPhy0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::28ec:7fff:fe1a:421/64 scope link
+       valid_lft forever preferred_lft forever
+5: tunl0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/ipip 0.0.0.0 brd 0.0.0.0
+6: gre0@NONE: <NOARP> mtu 1452 qdisc noop state DOWN group default qlen 1000
+    link/gre 0.0.0.0 brd 0.0.0.0
+7: gretap0@NONE: <BROADCAST,MULTICAST> mtu 1462 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff
+8: erspan0@NONE: <BROADCAST,MULTICAST> mtu 1450 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff
+9: ip_vti0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/ipip 0.0.0.0 brd 0.0.0.0
+10: ip6_vti0@NONE: <NOARP> mtu 1364 qdisc noop state DOWN group default qlen 1000
+    link/tunnel6 :: brd ::
+11: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+12: ip6tnl0@NONE: <NOARP> mtu 1452 qdisc noop state DOWN group default qlen 1000
+    link/tunnel6 :: brd ::
+13: ip6gre0@NONE: <NOARP> mtu 1448 qdisc noop state DOWN group default qlen 1000
+    link/gre6 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00 brd 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+console:/ #
+console:/ #
+console:/ #
+console:/ #
+console:/ #
+console:/ # ip -s
+Usage: ip [ OPTIONS ] OBJECT { COMMAND | help }
+       ip [ -force ] -batch filename
+where  OBJECT := { link | address | addrlabel | route | rule | neigh | ntable |
+                   tunnel | tuntap | maddress | mroute | mrule | monitor | xfrm |
+                   netns | l2tp | fou | macsec | tcp_metrics | token | netconf | ila |
+                   vrf | sr }
+       OPTIONS := { -V[ersion] | -s[tatistics] | -d[etails] | -r[esolve] |
+                    -h[uman-readable] | -iec |
+                    -f[amily] { inet | inet6 | ipx | dnet | mpls | bridge | link } |
+                    -4 | -6 | -I | -D | -B | -0 |
+                    -l[oops] { maximum-addr-flush-attempts } | -br[ief] |
+                    -o[neline] | -t[imestamp] | -ts[hort] | -b[atch] [filename] |
+                    -rc[vbuf] [size] | -n[etns] name | -a[ll] | -c[olor]}
+255|console:/ # ip -s link show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    RX: bytes  packets  errors  dropped overrun mcast
+    56488731   1006035  0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    56488731   1006035  0       0       0       0
+2: dummy0: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether 42:9f:ce:8c:62:e6 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast
+    0          0        0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    15351      72       0       0       0       0
+3: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether aa:aa:aa:aa:aa:b0 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast
+    23877264   161080   0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    24101103   243998   0       0       0       0
+4: ethPhy0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 2a:ec:7f:1a:04:21 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast
+    38324      418      0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    10194      52       0       0       0       0
+5: tunl0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ipip 0.0.0.0 brd 0.0.0.0
+    RX: bytes  packets  errors  dropped overrun mcast
+    0          0        0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    0          0        0       0       0       0
+6: gre0@NONE: <NOARP> mtu 1452 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/gre 0.0.0.0 brd 0.0.0.0
+    RX: bytes  packets  errors  dropped overrun mcast
+    0          0        0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    0          0        0       0       0       0
+7: gretap0@NONE: <BROADCAST,MULTICAST> mtu 1462 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast
+    0          0        0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    0          0        0       0       0       0
+8: erspan0@NONE: <BROADCAST,MULTICAST> mtu 1450 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast
+    0          0        0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    0          0        0       0       0       0
+9: ip_vti0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ipip 0.0.0.0 brd 0.0.0.0
+    RX: bytes  packets  errors  dropped overrun mcast
+    0          0        0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    0          0        0       0       0       0
+10: ip6_vti0@NONE: <NOARP> mtu 1364 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/tunnel6 :: brd ::
+    RX: bytes  packets  errors  dropped overrun mcast
+    0          0        0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    0          0        0       0       0       0
+11: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/sit 0.0.0.0 brd 0.0.0.0
+    RX: bytes  packets  errors  dropped overrun mcast
+    0          0        0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    0          0        0       0       0       0
+12: ip6tnl0@NONE: <NOARP> mtu 1452 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/tunnel6 :: brd ::
+    RX: bytes  packets  errors  dropped overrun mcast
+    0          0        0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    0          0        0       0       0       0
+13: ip6gre0@NONE: <NOARP> mtu 1448 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/gre6 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00 brd 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+    RX: bytes  packets  errors  dropped overrun mcast
+    0          0        0       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    0          0        0       0       0       0
+console:/ #
+console:/ #
+console:/ #
+console:/ #
+console:/ #
+console:/ # cd /sys/class/
+android_usb/        gpio/               net/                silabs_spidev/
+arvo/               hab/                npu/                sound/
+avb_class_a_intr/   hgsl/               pci_bus/            spi_master/
+avb_class_b_intr/   hidraw/             pci_epc/            spidev/
+backlight/          hubPortControl/     phy/                stm/
+bdi/                i2c-dev/            power_supply/       stm_source/
+block/              ieee80211/          ppp/                subsys/
+bluetooth/          input/              pps/                thermal/
+bsg/                iommu/              ptp/                tty/
+bt-dev/             isku/               pwm/                typec/
+devcoredump/        kone/               pyra/               typec_mux/
+devfreq-event/      koneplus/           qseecom/            udc/
+devfreq/            konepure/           regulator/          uio/
+devlink/            kovaplus/           remoteproc/         usb_role/
+dma/                leds/               rfkill/             usbmon/
+drm/                mdio_bus/           rpmsg/              video4linux/
+dual_role_usb/      mem/                rtc/                virtio-ports/
+extcon/             mhi_uci/            ryos/               wakeup/
+fastrpc/            misc/               savu/               watchdog/
+firmware/           mmc_host/           scsi_device/        xt_idletimer/
+fs3ipc/             msm-rng/            scsi_disk/          zram-control/
+gnss/               nd/                 scsi_host/
+console:/ # cd /sys/class/net/
+dummy0/    eth0/      gre0/      ip6_vti0/  ip6tnl0/   lo/        tunl0/
+erspan0/   ethPhy0/   gretap0/   ip6gre0/   ip_vti0/   sit0/
+console:/ # cd /sys/class/net/eth
+eth0/     ethPhy0/
+console:/ # cd /sys/class/net/eth
+eth0/     ethPhy0/
+console:/ # cd /sys/class/net/eth
+eth0/     ethPhy0/
+console:/ # cd /sys/class/net/ethPhy0/statistics/
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics # ls
+collisions     rx_errors         rx_over_errors     tx_dropped
+multicast      rx_fifo_errors    rx_packets         tx_errors
+rx_bytes       rx_frame_errors   tx_aborted_errors  tx_fifo_errors
+rx_compressed  rx_length_errors  tx_bytes           tx_heartbeat_errors
+rx_crc_errors  rx_missed_errors  tx_carrier_errors  tx_packets
+rx_dropped     rx_nohandler      tx_compressed      tx_window_errors
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+at /proc/net/snmp                                                             <
+Ip: Forwarding DefaultTTL InReceives InHdrErrors InAddrErrors ForwDatagrams InUnknownProtos InDiscards InDelivers OutRequests OutDiscards OutNoRoutes ReasmTimeout ReasmReqds ReasmOKs ReasmFails FragOKs FragFails FragCreates
+Ip: 2 64 1183990 0 0 0 0 0 1183926 1267800 1 17 0 0 0 0 0 0 0
+Icmp: InMsgs InErrors InCsumErrors InDestUnreachs InTimeExcds InParmProbs InSrcQuenchs InRedirects InEchos InEchoReps InTimestamps InTimestampReps InAddrMasks InAddrMaskReps OutMsgs OutErrors OutDestUnreachs OutTimeExcds OutParmProbs OutSrcQuenchs OutRedirects OutEchos OutEchoReps OutTimestamps OutTimestampReps OutAddrMasks OutAddrMaskReps
+Icmp: 371616 0 0 4 0 0 0 0 198087 173525 0 0 0 0 371625 0 7 0 0 0 0 173531 198087 0 0 0 0
+IcmpMsg: InType0 InType3 InType8 OutType0 OutType3 OutType8
+IcmpMsg: 173525 4 198087 198087 7 173531
+Tcp: RtoAlgorithm RtoMin RtoMax MaxConn ActiveOpens PassiveOpens AttemptFails EstabResets CurrEstab InSegs OutSegs RetransSegs InErrs OutRsts InCsumErrors
+Tcp: 1 200 120000 -1 20 18 2 0 36 743738 741724 17 0 2 0
+Udp: InDatagrams NoPorts InErrors OutDatagrams RcvbufErrors SndbufErrors InCsumErrors IgnoredMulti
+Udp: 69033 3 0 154418 0 0 0 24
+UdpLite: InDatagrams NoPorts InErrors OutDatagrams RcvbufErrors SndbufErrors InCsumErrors IgnoredMulti
+UdpLite: 0 0 0 0 0 0 0 0
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+at /proc/net/s                                                                <
+sco             snmp6           sockstat6       stat/
+snmp            sockstat        softnet_stat
+at /proc/net/s                                                                <
+sco             snmp6           sockstat6       stat/
+snmp            sockstat        softnet_stat
+at /proc/net/softnet_stat                                                     <
+000532d9 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+0002e912 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+000269fa 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+00041402 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+00038d76 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics #
+console:/sys/class/net/ethPhy0/statistics # ethtcd
+/system/bin/sh: ethtcd: inaccessible or not found
+127|console:/sys/class/net/ethPhy0/statistics #
+127|console:/sys/class/net/ethPhy0/statistics #
+127|console:/sys/class/net/ethPhy0/statistics # cd
+/system/bin/sh: cd: no home directory (HOME not set)
+2|console:/sys/class/net/ethPhy0/statistics #
+2|console:/sys/class/net/ethPhy0/statistics #
+2|console:/sys/class/net/ethPhy0/statistics #
+2|console:/sys/class/net/ethPhy0/statistics # cd /
+console:/ #
+console:/ #
+console:/ #
+console:/ #
+console:/ # ethtool
+/system/bin/sh: ethtool: inaccessible or not found
+127|console:/ #
+127|console:/ #
+127|console:/ # ss -s
+Total: 1012 (kernel 14646)
+TCP:   53 (estab 36, closed 2, orphaned 0, synrecv 0, timewait 0/0), ports 160
+
+Transport Total     IP        IPv6
+*         14646     -         -
+RAW       0         0         0
+UDP       37        32        5
+TCP       51        46        5
+INET      88        78        10
+FRAG      0         0         0
+
+console:/ # ss -sa
+Total: 1012 (kernel 14646)
+TCP:   53 (estab 36, closed 2, orphaned 0, synrecv 0, timewait 0/0), ports 160
+
+Transport Total     IP        IPv6
+*         14646     -         -
+RAW       0         0         0
+UDP       37        32        5
+TCP       51        46        5
+INET      88        78        10
+FRAG      0         0         0
+
+console:/ # ss -a
+Netid  State      Recv-Q Send-Q Local Address:Port                 Peer Address:Port
+nl     UNCONN     0      0      rtnl:Binder:359_3/359       *
+nl     UNCONN     0      0      rtnl:kernel                 *
+nl     UNCONN     0      0      rtnl:ity.carplay.app/2706   *
+nl     UNCONN     0      0      rtnl:mdnsd/587              *
+nl     UNCONN     0      0      tcpdiag:kernel                 *
+nl     UNCONN     0      0      tcpdiag:Binder:359_3/359       *
+nl     UNCONN     0      0      nflog:kernel                 *
+nl     UNCONN     0      0      nflog:Binder:359_3/359       *
+nl     UNCONN     0      0      xfrm:kernel                 *
+nl     UNCONN     0      0      selinux:servicemanager/241     *
+nl     UNCONN     0      0      selinux:init/1                 *
+nl     UNCONN     0      0      selinux:vndservicemanag/243    *
+nl     UNCONN     0      0      selinux:keystore/739           *
+nl     UNCONN     0      0      selinux:hwservicemanage/242    *
+nl     UNCONN     0      0      selinux:kernel                 *
+nl     UNCONN     0      0      audit:logd/239               *
+nl     UNCONN     0      0      audit:kernel                 *
+nl     UNCONN     0      0      fiblookup:kernel                 *
+nl     UNCONN     0      0      nft:-516480050             *
+nl     UNCONN     0      0      nft:kernel                 *
+nl     UNCONN     0      0      nft:Binder:359_3/359       *
+nl     UNCONN     0      0      uevent:Binder:359_3/359       *
+nl     UNCONN     0      0      uevent:composer@2.4-se/375    *
+nl     UNCONN     0      0      uevent:diagnostic@1.0-/397    *
+nl     UNCONN     0      0      uevent:health@2.1-serv/377    *
+nl     UNCONN     0      0      uevent:diag-router/536        *
+nl     UNCONN     0      0      uevent:kernel                 *
+nl     UNCONN     0      0      uevent:Binder:864_3/864       *
+nl     UNCONN     0      0      uevent:health@2.0-serv/376    *
+nl     UNCONN     0      0      uevent:ueventd/201            *
+nl     UNCONN     0      0      uevent:gadgetext@1.0-s/399    *
+nl     UNCONN     0      0      uevent:usb@1.0-service/400    *
+nl     UNCONN     0      0      uevent:Binder:261_2/261       *
+nl     UNCONN     0      0      genl:kernel                 *
+nl     UNCONN     0      0      genl:-717742137             *
+nl     UNCONN     0      0      genl:wificond/762           *
+u_str  LISTEN     0      0      /dev/socket/property_service 18247                 * 0
+u_str  LISTEN     0      0      /dev/socket/logd 20168                 * 0
+u_str  LISTEN     0      0      /dev/socket/zygote 22228                 * 0
+u_str  LISTEN     0      0      /dev/socket/usap_pool_primary 22230                 * 0
+u_str  LISTEN     0      0      /dev/socket/dnsproxyd 22403                 * 0
+u_str  LISTEN     0      0      /dev/socket/mdns 22405                 * 0
+u_str  LISTEN     0      0      /dev/socket/fwmarkd 22407                 * 0
+u_str  LISTEN     0      0      /dev/socket/zygote_secondary 23561                 * 0
+u_str  LISTEN     0      0      /dev/socket/usap_pool_secondary 23563                 * 0
+u_str  LISTEN     0      0      /dev/socket/traced_consumer 24123                 * 0
+u_str  LISTEN     0      0      /dev/socket/traced_producer 24125                 * 0
+u_str  ESTAB      0      0       * 24203                 * 0
+u_str  ESTAB      0      0       * 24204                 * 0
+u_str  LISTEN     0      0      /dev/socket/mdnsd 27127                 * 0
+u_str  ESTAB      0      0       * 29121                 * 0
+u_str  ESTAB      0      0      /dev/socket/traced_producer 29820                 * 0
+u_str  LISTEN     0      0      /dev/socket/thermal-send-client 29944                 * 0
+u_str  LISTEN     0      0      /dev/socket/thermal-recv-client 29946                 * 0
+u_str  LISTEN     0      0      /dev/socket/thermal-recv-passive-client 29948                 * 0
+u_str  LISTEN     0      0      /dev/socket/thermal-send-rule 29950                 * 0
+u_str  LISTEN     0      0      @THERMALE_UI 30184                 * 0
+u_str  ESTAB      0      0      /dev/socket/zygote 31628                 * 0
+u_str  ESTAB      0      0      /dev/socket/zygote_secondary 31629                 * 0
+u_str  LISTEN     0      0      /data/system/ndebugsocket 31674                 * 0
+u_str  LISTEN     0      0      @com.android.internal.os.WebViewZygoteInit/725685e8-2d19-46f4-9e7e-fcbe6a3163cc 31710                 * 0
+u_str  ESTAB      0      0       * 31712                 * 0
+u_str  ESTAB      0      0       * 31990                 * 0
+u_str  ESTAB      0      0      /dev/socket/mdns 32010                 * 0
+u_str  ESTAB      0      0      @com.android.internal.os.WebViewZygoteInit/725685e8-2d19-46f4-9e7e-fcbe6a3163cc 32046                 * 0
+u_str  ESTAB      0      0       * 33075                 * 0
+u_str  ESTAB      0      0       * 33835                 * 0
+u_str  ESTAB      0      0       * 36045                 * 0
+u_str  ESTAB      0      0       * 36046                 * 0
+u_str  ESTAB      0      0       * 36147                 * 0
+u_str  ESTAB      0      0       * 36148                 * 0
+u_str  ESTAB      0      0       * 36194                 * 0
+u_str  ESTAB      0      0       * 36195                 * 0
+u_str  ESTAB      0      0       * 36356                 * 0
+u_str  ESTAB      0      0       * 36357                 * 0
+u_str  ESTAB      0      0       * 40317                 * 0
+u_str  ESTAB      0      0      /dev/socket/traced_producer 40318                 * 0
+u_str  ESTAB      0      0       * 41366                 * 0
+u_str  ESTAB      0      0       * 41367                 * 0
+u_str  LISTEN     0      0      /data/user_de/0/com.harman.connectivity.carplay.app/mdnssocket 44009                 * 0
+u_str  ESTAB      0      0       * 56021                 * 0
+u_str  ESTAB      0      0      /data/user_de/0/com.harman.connectivity.carplay.app/mdnssocket 56022                 * 0
+u_str  ESTAB      0      0       * 57262                 * 0
+u_str  ESTAB      0      0      /data/user_de/0/com.harman.connectivity.carplay.app/mdnssocket 57263                 * 0
+u_str  ESTAB      0      0       * 156576                * 0
+u_str  ESTAB      0      0       * 156577                * 0
+u_str  ESTAB      0      0       * 158169                * 0
+u_str  ESTAB      0      0      /dev/socket/mdnsd 158170                * 0
+u_dgr  ESTAB      0      0       * 14079                 * 0
+u_dgr  ESTAB      0      0       * 16265                 * 0
+u_dgr  ESTAB      0      0       * 16306                 * 0
+u_dgr  ESTAB      0      0       * 16320                 * 0
+u_dgr  ESTAB      0      0       * 16329                 * 0
+u_dgr  ESTAB      0      0       * 16664                 * 0
+u_dgr  ESTAB      0      0       * 16791                 * 0
+u_dgr  ESTAB      0      0       * 17036                 * 0
+u_dgr  ESTAB      0      0       * 17040                 * 0
+u_dgr  ESTAB      0      0       * 17047                 * 0
+u_dgr  ESTAB      0      0       * 17052                 * 0
+u_dgr  ESTAB      0      0       * 17097                 * 0
+u_dgr  ESTAB      0      0       * 17163                 * 0
+u_dgr  ESTAB      0      0       * 17169                 * 0
+u_dgr  ESTAB      0      0       * 17194                 * 0
+u_dgr  ESTAB      0      0      @gplisnr@ 18602                 * 0
+u_dgr  ESTAB      0      0       * 18641                 * 0
+u_dgr  ESTAB      0      0       * 18874                 * 0
+u_dgr  ESTAB      0      0       * 19099                 * 0
+u_dgr  ESTAB      0      0       * 19127                 * 0
+u_dgr  ESTAB      0      0       * 19265                 * 0
+u_dgr  ESTAB      0      0       * 20087                 * 0
+u_dgr  ESTAB      0      0      /dev/socket/logdw 20172                 * 0
+u_dgr  ESTAB      0      0       * 20220                 * 0
+u_dgr  ESTAB      0      0       * 20230                 * 0
+u_dgr  ESTAB      0      0       * 20235                 * 0
+u_dgr  ESTAB      0      0       * 20473                 * 0
+u_dgr  ESTAB      0      0       * 22052                 * 0
+u_dgr  ESTAB      0      0       * 22287                 * 0
+u_dgr  ESTAB      0      0       * 22323                 * 0
+u_dgr  ESTAB      0      0       * 22547                 * 0
+u_dgr  ESTAB      0      0       * 22948                 * 0
+u_dgr  ESTAB      0      0       * 23119                 * 0
+u_dgr  ESTAB      0      0       * 23219                 * 0
+u_dgr  ESTAB      0      0       * 23263                 * 0
+u_dgr  ESTAB      0      0       * 23327                 * 0
+u_dgr  ESTAB      0      0      /dev/socket/statsdw 23625                 * 0
+u_dgr  ESTAB      0      0       * 23743                 * 0
+u_dgr  ESTAB      0      0       * 23776                 * 0
+u_dgr  ESTAB      0      0       * 23789                 * 0
+u_dgr  ESTAB      0      0       * 23804                 * 0
+u_dgr  ESTAB      0      0       * 23849                 * 0
+u_dgr  ESTAB      0      0       * 23852                 * 0
+u_dgr  ESTAB      0      0       * 23898                 * 0
+u_dgr  ESTAB      0      0       * 23900                 * 0
+u_dgr  ESTAB      0      0       * 24342                 * 0
+u_dgr  ESTAB      0      0       * 24343                 * 0
+u_dgr  ESTAB      0      0       * 24561                 * 0
+u_dgr  ESTAB      0      0       * 24566                 * 0
+u_dgr  ESTAB      0      0       * 24871                 * 0
+u_dgr  ESTAB      0      0       * 24875                 * 0
+u_dgr  ESTAB      0      0       * 24921                 * 0
+u_dgr  ESTAB      0      0       * 25148                 * 0
+u_dgr  ESTAB      0      0       * 25160                 * 0
+u_dgr  ESTAB      0      0       * 25242                 * 0
+u_dgr  ESTAB      0      0       * 25248                 * 0
+u_dgr  ESTAB      0      0       * 25261                 * 0
+u_dgr  ESTAB      0      0       * 25536                 * 0
+u_dgr  ESTAB      0      0       * 25773                 * 0
+u_dgr  ESTAB      0      0       * 25990                 * 0
+u_dgr  ESTAB      0      0       * 26006                 * 0
+u_dgr  ESTAB      0      0       * 26083                 * 0
+u_dgr  ESTAB      0      0       * 26191                 * 0
+u_dgr  ESTAB      0      0       * 26248                 * 0
+u_dgr  ESTAB      0      0       * 26252                 * 0
+u_dgr  ESTAB      0      0      /data/system/unsolzygotesocket 26467                 * 0
+u_dgr  ESTAB      0      0       * 26992                 * 0
+u_dgr  ESTAB      0      0       * 27715                 * 0
+u_dgr  ESTAB      0      0       * 27785                 * 0
+u_dgr  ESTAB      0      0       * 27842                 * 0
+u_dgr  ESTAB      0      0       * 27844                 * 0
+u_dgr  ESTAB      0      0       * 27862                 * 0
+u_dgr  ESTAB      0      0       * 27917                 * 0
+u_dgr  ESTAB      0      0       * 27918                 * 0
+u_dgr  ESTAB      0      0       * 28533                 * 0
+u_dgr  ESTAB      0      0       * 28638                 * 0
+u_dgr  ESTAB      0      0       * 28644                 * 0
+u_dgr  ESTAB      0      0       * 28645                 * 0
+u_dgr  ESTAB      0      0       * 29030                 * 0
+u_dgr  ESTAB      0      0       * 29065                 * 0
+u_dgr  ESTAB      0      0       * 29637                 * 0
+u_dgr  ESTAB      0      0       * 29808                 * 0
+u_dgr  ESTAB      0      0       * 29819                 * 0
+u_dgr  ESTAB      0      0       * 29825                 * 0
+u_dgr  ESTAB      0      0       * 29888                 * 0
+u_dgr  ESTAB      0      0       * 30120                 * 0
+u_dgr  ESTAB      0      0       * 30150                 * 0
+u_dgr  ESTAB      0      0       * 30151                 * 0
+u_dgr  ESTAB      0      0       * 30186                 * 0
+u_dgr  ESTAB      0      0       * 30353                 * 0
+u_dgr  ESTAB      0      0       * 30487                 * 0
+u_dgr  ESTAB      0      0       * 30562                 * 0
+u_dgr  ESTAB      0      0       * 30639                 * 0
+u_dgr  ESTAB      0      0       * 30877                 * 0
+u_dgr  ESTAB      0      0       * 30882                 * 0
+u_dgr  ESTAB      0      0       * 30893                 * 0
+u_dgr  ESTAB      0      0       * 30926                 * 0
+u_dgr  ESTAB      0      0       * 30943                 * 0
+u_dgr  ESTAB      0      0       * 30970                 * 0
+u_dgr  ESTAB      0      0       * 30980                 * 0
+u_dgr  ESTAB      0      0       * 31004                 * 0
+u_dgr  ESTAB      0      0       * 31150                 * 0
+u_dgr  ESTAB      0      0       * 31320                 * 0
+u_dgr  ESTAB      0      0       * 31708                 * 0
+u_dgr  ESTAB      0      0       * 31709                 * 0
+u_dgr  ESTAB      0      0       * 31718                 * 0
+u_dgr  ESTAB      0      0       * 31763                 * 0
+u_dgr  ESTAB      0      0       * 31777                 * 0
+u_dgr  ESTAB      0      0       * 31788                 * 0
+u_dgr  ESTAB      0      0       * 32023                 * 0
+u_dgr  ESTAB      0      0       * 32195                 * 0
+u_dgr  ESTAB      0      0       * 32228                 * 0
+u_dgr  ESTAB      0      0       * 32233                 * 0
+u_dgr  ESTAB      0      0       * 32409                 * 0
+u_dgr  ESTAB      0      0       * 32456                 * 0
+u_dgr  ESTAB      0      0       * 32503                 * 0
+u_dgr  ESTAB      0      0       * 32593                 * 0
+u_dgr  ESTAB      0      0       * 32624                 * 0
+u_dgr  ESTAB      0      0       * 32768                 * 0
+u_dgr  ESTAB      0      0       * 33234                 * 0
+u_dgr  ESTAB      0      0       * 33245                 * 0
+u_dgr  ESTAB      0      0       * 33309                 * 0
+u_dgr  ESTAB      0      0       * 33329                 * 0
+u_dgr  ESTAB      0      0       * 33383                 * 0
+u_dgr  ESTAB      0      0       * 33410                 * 0
+u_dgr  ESTAB      0      0       * 33492                 * 0
+u_dgr  ESTAB      0      0       * 33523                 * 0
+u_dgr  ESTAB      0      0       * 33686                 * 0
+u_dgr  ESTAB      0      0       * 33691                 * 0
+u_dgr  ESTAB      0      0       * 33709                 * 0
+u_dgr  ESTAB      0      0       * 33718                 * 0
+u_dgr  ESTAB      0      0       * 33773                 * 0
+u_dgr  ESTAB      0      0       * 33774                 * 0
+u_dgr  ESTAB      0      0       * 33784                 * 0
+u_dgr  ESTAB      0      0       * 33960                 * 0
+u_dgr  ESTAB      0      0       * 33967                 * 0
+u_dgr  ESTAB      0      0       * 34107                 * 0
+u_dgr  ESTAB      0      0       * 34116                 * 0
+u_dgr  ESTAB      0      0       * 34193                 * 0
+u_dgr  ESTAB      0      0       * 34334                 * 0
+u_dgr  ESTAB      0      0       * 34371                 * 0
+u_dgr  ESTAB      0      0       * 34427                 * 0
+u_dgr  ESTAB      0      0       * 34692                 * 0
+u_dgr  ESTAB      0      0       * 34708                 * 0
+u_dgr  ESTAB      0      0       * 34723                 * 0
+u_dgr  ESTAB      0      0       * 34724                 * 0
+u_dgr  ESTAB      0      0       * 34770                 * 0
+u_dgr  ESTAB      0      0       * 34802                 * 0
+u_dgr  ESTAB      0      0       * 34804                 * 0
+u_dgr  ESTAB      0      0       * 34811                 * 0
+u_dgr  ESTAB      0      0       * 35194                 * 0
+u_dgr  ESTAB      0      0       * 35271                 * 0
+u_dgr  ESTAB      0      0       * 35320                 * 0
+u_dgr  ESTAB      0      0       * 35344                 * 0
+u_dgr  ESTAB      0      0       * 35377                 * 0
+u_dgr  ESTAB      0      0       * 35428                 * 0
+u_dgr  ESTAB      0      0       * 35867                 * 0
+u_dgr  ESTAB      0      0       * 35894                 * 0
+u_dgr  ESTAB      0      0       * 35895                 * 0
+u_dgr  ESTAB      0      0       * 35950                 * 0
+u_dgr  ESTAB      0      0       * 35951                 * 0
+u_dgr  ESTAB      0      0       * 36021                 * 0
+u_dgr  ESTAB      0      0       * 36099                 * 0
+u_dgr  ESTAB      0      0       * 36192                 * 0
+u_dgr  ESTAB      0      0       * 36321                 * 0
+u_dgr  ESTAB      0      0       * 36393                 * 0
+u_dgr  ESTAB      0      0       * 36396                 * 0
+u_dgr  ESTAB      0      0       * 37361                 * 0
+u_dgr  ESTAB      0      0       * 37409                 * 0
+u_dgr  ESTAB      0      0       * 38073                 * 0
+u_dgr  ESTAB      0      0       * 38469                 * 0
+u_dgr  ESTAB      0      0       * 38569                 * 0
+u_dgr  ESTAB      0      0       * 39012                 * 0
+u_dgr  ESTAB      0      0       * 39043                 * 0
+u_dgr  ESTAB      0      0       * 39060                 * 0
+u_dgr  ESTAB      0      0       * 39079                 * 0
+u_dgr  ESTAB      0      0       * 39187                 * 0
+u_dgr  ESTAB      0      0       * 39223                 * 0
+u_dgr  ESTAB      0      0       * 39274                 * 0
+u_dgr  ESTAB      0      0       * 39277                 * 0
+u_dgr  ESTAB      0      0       * 39312                 * 0
+u_dgr  ESTAB      0      0       * 39362                 * 0
+u_dgr  ESTAB      0      0       * 40033                 * 0
+u_dgr  ESTAB      0      0       * 40044                 * 0
+u_dgr  ESTAB      0      0       * 40082                 * 0
+u_dgr  ESTAB      0      0       * 40122                 * 0
+u_dgr  ESTAB      0      0       * 40197                 * 0
+u_dgr  ESTAB      0      0       * 40229                 * 0
+u_dgr  ESTAB      0      0       * 40249                 * 0
+u_dgr  ESTAB      0      0       * 41005                 * 0
+u_dgr  ESTAB      0      0       * 41344                 * 0
+u_dgr  ESTAB      0      0       * 41345                 * 0
+u_dgr  ESTAB      0      0       * 41408                 * 0
+u_dgr  ESTAB      0      0       * 55864                 * 0
+u_dgr  ESTAB      0      0       * 56255                 * 0
+u_dgr  ESTAB      0      0       * 56318                 * 0
+u_dgr  ESTAB      0      0       * 59079                 * 0
+u_dgr  ESTAB      0      0       * 59084                 * 0
+u_dgr  ESTAB      0      0       * 59156                 * 0
+u_dgr  ESTAB      0      0       * 59234                 * 0
+u_dgr  ESTAB      0      0       * 59260                 * 0
+u_dgr  ESTAB      0      0       * 59261                 * 0
+u_dgr  ESTAB      0      0       * 59290                 * 0
+u_dgr  ESTAB      0      0       * 59355                 * 0
+u_dgr  ESTAB      0      0       * 59370                 * 0
+u_dgr  ESTAB      0      0       * 59398                 * 0
+u_dgr  ESTAB      0      0       * 59401                 * 0
+u_dgr  ESTAB      0      0       * 59496                 * 0
+u_dgr  ESTAB      0      0       * 59569                 * 0
+u_dgr  ESTAB      0      0       * 59720                 * 0
+u_dgr  ESTAB      0      0       * 59750                 * 0
+u_dgr  ESTAB      0      0       * 59888                 * 0
+u_dgr  ESTAB      0      0       * 59925                 * 0
+u_dgr  ESTAB      0      0       * 60208                 * 0
+u_dgr  ESTAB      0      0       * 60394                 * 0
+u_dgr  ESTAB      0      0       * 60438                 * 0
+u_dgr  ESTAB      0      0       * 60499                 * 0
+u_dgr  ESTAB      0      0       * 60663                 * 0
+u_dgr  ESTAB      0      0       * 61559                 * 0
+u_dgr  ESTAB      0      0       * 61877                 * 0
+u_dgr  ESTAB      0      0       * 62114                 * 0
+u_dgr  ESTAB      0      0       * 62871                 * 0
+u_dgr  ESTAB      0      0       * 63574                 * 0
+u_dgr  ESTAB      0      0       * 63890                 * 0
+u_dgr  ESTAB      0      0       * 66516                 * 0
+u_dgr  ESTAB      0      0       * 71254                 * 0
+u_dgr  ESTAB      0      0       * 87187                 * 0
+u_dgr  ESTAB      0      0       * 89155                 * 0
+u_dgr  ESTAB      0      0       * 89212                 * 0
+u_dgr  ESTAB      0      0       * 89232                 * 0
+u_dgr  ESTAB      0      0       * 91464                 * 0
+u_dgr  ESTAB      0      0       * 98852                 * 0
+u_dgr  ESTAB      0      0       * 98945                 * 0
+u_dgr  ESTAB      0      0       * 100401                * 0
+u_dgr  ESTAB      0      0       * 101710                * 0
+u_dgr  ESTAB      0      0       * 153459                * 0
+u_dgr  ESTAB      0      0       * 156566                * 0
+u_dgr  ESTAB      0      0       * 156580                * 0
+u_dgr  ESTAB      0      0       * 158814                * 0
+u_dgr  ESTAB      0      0       * 159733                * 0
+u_seq  LISTEN     0      0      /dev/socket/lmkd 16552                 * 0
+u_seq  ESTAB      0      0       * 18245                 * 0
+u_seq  ESTAB      0      0       * 18246                 * 0
+u_seq  ESTAB      0      0       * 18270                 * 0
+u_seq  ESTAB      0      0       * 18271                 * 0
+u_seq  LISTEN     0      0      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 19317                 * 0
+u_seq  ESTAB      0      0      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 19356                 * 0
+u_seq  LISTEN     0      0      /dev/socket/logdr 20170                 * 0
+u_seq  LISTEN     0      0      /dev/socket/tombstoned_crash 22916                 * 0
+u_seq  LISTEN     0      0      /dev/socket/tombstoned_intercept 22918                 * 0
+u_seq  LISTEN     0      0      /dev/socket/tombstoned_java_trace 22920                 * 0
+u_seq  ESTAB      0      0       * 24034                 * 0
+u_seq  ESTAB      0      0       * 24035                 * 0
+u_seq  ESTAB      0      0       * 24046                 * 0
+u_seq  ESTAB      0      0       * 24047                 * 0
+u_seq  ESTAB      0      0       * 26589                 * 0
+u_seq  ESTAB      0      0       * 26590                 * 0
+u_seq  ESTAB      0      0       * 26591                 * 0
+u_seq  ESTAB      0      0       * 26592                 * 0
+u_seq  ESTAB      0      0       * 26593                 * 0
+u_seq  ESTAB      0      0       * 26594                 * 0
+u_seq  ESTAB      0      0       * 26595                 * 0
+u_seq  ESTAB      0      0       * 26596                 * 0
+u_seq  ESTAB      0      0       * 26599                 * 0
+u_seq  ESTAB      0      0       * 26600                 * 0
+u_seq  ESTAB      0      0       * 27714                 * 0
+u_seq  ESTAB      0      0       * 27779                 * 0
+u_seq  ESTAB      0      0      /dev/socket/logdr 27780                 * 0
+u_seq  LISTEN     0      0      @/mocca/channels/530/29@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 27919                 * 0
+u_seq  ESTAB      0      0      @/mocca/connections/530/30@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 27920                 * 0
+u_seq  LISTEN     0      0      @/mp/channels/530/33@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 27921                 * 0
+u_seq  LISTEN     0      0      @/mp/channels/530/37@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 27923                 * 0
+u_seq  ESTAB      0      0      @/mp/channels/530/43@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 28139                 * 0
+u_seq  ESTAB      0      0      @/mp/channels/530/49@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 28140                 * 0
+u_seq  ESTAB      0      0      @/mp/channels/530/55@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 28141                 * 0
+u_seq  ESTAB      0      0       * 28640                 * 0
+u_seq  ESTAB      0      0       * 28641                 * 0
+u_seq  ESTAB      0      0       * 28647                 * 0
+u_seq  ESTAB      0      0       * 28648                 * 0
+u_seq  ESTAB      0      0       * 31331                 * 0
+u_seq  ESTAB      0      0       * 31332                 * 0
+u_seq  ESTAB      0      0      @/mocca/channels/530/29@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 31389                 * 0
+u_seq  ESTAB      0      0       * 31479                 * 0
+u_seq  ESTAB      0      0       * 31480                 * 0
+u_seq  ESTAB      0      0       * 31838                 * 0
+u_seq  LISTEN     0      0      @/mp/channels/530/49@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 31978                 * 0
+u_seq  ESTAB      0      0      @/mp/connections/530/53@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 31980                 * 0
+u_seq  LISTEN     0      0      @/mp/channels/530/55@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 31981                 * 0
+u_seq  ESTAB      0      0      @/mp/connections/530/59@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 31983                 * 0
+u_seq  ESTAB      0      0      /dev/socket/lmkd 31986                 * 0
+u_seq  ESTAB      0      0       * 32398                 * 0
+u_seq  ESTAB      0      0       * 32399                 * 0
+u_seq  ESTAB      0      0       * 32434                 * 0
+u_seq  ESTAB      0      0       * 32435                 * 0
+u_seq  ESTAB      0      0       * 32449                 * 0
+u_seq  ESTAB      0      0       * 32450                 * 0
+u_seq  ESTAB      0      0       * 32525                 * 0
+u_seq  ESTAB      0      0       * 32526                 * 0
+u_seq  ESTAB      0      0       * 32670                 * 0
+u_seq  ESTAB      0      0       * 32671                 * 0
+u_seq  ESTAB      0      0       * 32737                 * 0
+u_seq  ESTAB      0      0       * 32738                 * 0
+u_seq  ESTAB      0      0      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 32990                 * 0
+u_seq  LISTEN     0      0      @/mp/channels/530/43@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 33067                 * 0
+u_seq  ESTAB      0      0      @/mp/connections/530/47@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 33069                 * 0
+u_seq  ESTAB      0      0       * 33070                 * 0
+u_seq  ESTAB      0      0       * 33116                 * 0
+u_seq  ESTAB      0      0       * 33117                 * 0
+u_seq  ESTAB      0      0       * 33183                 * 0
+u_seq  ESTAB      0      0       * 33184                 * 0
+u_seq  ESTAB      0      0       * 33214                 * 0
+u_seq  ESTAB      0      0       * 33215                 * 0
+u_seq  ESTAB      0      0       * 33228                 * 0
+u_seq  ESTAB      0      0       * 33229                 * 0
+u_seq  ESTAB      0      0       * 33306                 * 0
+u_seq  ESTAB      0      0       * 33307                 * 0
+u_seq  ESTAB      0      0       * 33320                 * 0
+u_seq  ESTAB      0      0       * 33321                 * 0
+u_seq  ESTAB      0      0       * 33342                 * 0
+u_seq  ESTAB      0      0       * 33343                 * 0
+u_seq  ESTAB      0      0       * 33371                 * 0
+u_seq  ESTAB      0      0       * 33372                 * 0
+u_seq  ESTAB      0      0       * 33400                 * 0
+u_seq  ESTAB      0      0       * 33401                 * 0
+u_seq  ESTAB      0      0       * 33419                 * 0
+u_seq  ESTAB      0      0       * 33420                 * 0
+u_seq  ESTAB      0      0       * 33683                 * 0
+u_seq  ESTAB      0      0       * 33684                 * 0
+u_seq  ESTAB      0      0       * 33746                 * 0
+u_seq  ESTAB      0      0       * 33747                 * 0
+u_seq  ESTAB      0      0       * 33766                 * 0
+u_seq  ESTAB      0      0       * 33767                 * 0
+u_seq  ESTAB      0      0       * 33789                 * 0
+u_seq  ESTAB      0      0       * 33790                 * 0
+u_seq  ESTAB      0      0       * 33878                 * 0
+u_seq  ESTAB      0      0       * 33879                 * 0
+u_seq  ESTAB      0      0       * 33970                 * 0
+u_seq  ESTAB      0      0       * 33971                 * 0
+u_seq  ESTAB      0      0       * 33990                 * 0
+u_seq  ESTAB      0      0       * 33991                 * 0
+u_seq  ESTAB      0      0       * 34099                 * 0
+u_seq  ESTAB      0      0       * 34100                 * 0
+u_seq  ESTAB      0      0       * 34131                 * 0
+u_seq  ESTAB      0      0       * 34132                 * 0
+u_seq  ESTAB      0      0       * 34156                 * 0
+u_seq  ESTAB      0      0       * 34157                 * 0
+u_seq  ESTAB      0      0       * 34180                 * 0
+u_seq  ESTAB      0      0       * 34181                 * 0
+u_seq  ESTAB      0      0       * 34209                 * 0
+u_seq  ESTAB      0      0       * 34210                 * 0
+u_seq  ESTAB      0      0       * 34212                 * 0
+u_seq  ESTAB      0      0       * 34213                 * 0
+u_seq  ESTAB      0      0       * 34224                 * 0
+u_seq  ESTAB      0      0       * 34225                 * 0
+u_seq  ESTAB      0      0       * 34249                 * 0
+u_seq  ESTAB      0      0       * 34250                 * 0
+u_seq  ESTAB      0      0       * 34252                 * 0
+u_seq  ESTAB      0      0       * 34253                 * 0
+u_seq  ESTAB      0      0       * 34265                 * 0
+u_seq  ESTAB      0      0       * 34266                 * 0
+u_seq  ESTAB      0      0       * 34277                 * 0
+u_seq  ESTAB      0      0       * 34278                 * 0
+u_seq  ESTAB      0      0       * 34292                 * 0
+u_seq  ESTAB      0      0       * 34293                 * 0
+u_seq  ESTAB      0      0       * 34327                 * 0
+u_seq  ESTAB      0      0       * 34328                 * 0
+u_seq  ESTAB      0      0       * 34639                 * 0
+u_seq  ESTAB      0      0       * 34640                 * 0
+u_seq  ESTAB      0      0       * 34653                 * 0
+u_seq  ESTAB      0      0       * 34654                 * 0
+u_seq  ESTAB      0      0       * 34671                 * 0
+u_seq  ESTAB      0      0       * 34672                 * 0
+u_seq  ESTAB      0      0       * 34684                 * 0
+u_seq  ESTAB      0      0       * 34685                 * 0
+u_seq  ESTAB      0      0       * 34702                 * 0
+u_seq  ESTAB      0      0       * 34703                 * 0
+u_seq  ESTAB      0      0       * 34718                 * 0
+u_seq  ESTAB      0      0       * 34719                 * 0
+u_seq  ESTAB      0      0       * 34752                 * 0
+u_seq  ESTAB      0      0       * 34753                 * 0
+u_seq  ESTAB      0      0       * 34779                 * 0
+u_seq  ESTAB      0      0       * 34780                 * 0
+u_seq  ESTAB      0      0       * 34995                 * 0
+u_seq  ESTAB      0      0       * 34996                 * 0
+u_seq  ESTAB      0      0       * 35008                 * 0
+u_seq  ESTAB      0      0       * 35009                 * 0
+u_seq  ESTAB      0      0       * 35210                 * 0
+u_seq  ESTAB      0      0       * 35211                 * 0
+u_seq  ESTAB      0      0       * 35233                 * 0
+u_seq  ESTAB      0      0       * 35234                 * 0
+u_seq  ESTAB      0      0       * 35249                 * 0
+u_seq  ESTAB      0      0       * 35250                 * 0
+u_seq  ESTAB      0      0       * 35262                 * 0
+u_seq  ESTAB      0      0       * 35263                 * 0
+u_seq  ESTAB      0      0       * 35293                 * 0
+u_seq  ESTAB      0      0       * 35294                 * 0
+u_seq  ESTAB      0      0       * 35888                 * 0
+u_seq  ESTAB      0      0       * 35889                 * 0
+u_seq  ESTAB      0      0       * 35935                 * 0
+u_seq  ESTAB      0      0       * 35936                 * 0
+u_seq  ESTAB      0      0       * 36013                 * 0
+u_seq  ESTAB      0      0       * 36014                 * 0
+u_seq  ESTAB      0      0       * 36058                 * 0
+u_seq  ESTAB      0      0       * 36059                 * 0
+u_seq  ESTAB      0      0       * 36278                 * 0
+u_seq  ESTAB      0      0       * 36279                 * 0
+u_seq  ESTAB      0      0       * 37451                 * 0
+u_seq  ESTAB      0      0       * 37452                 * 0
+u_seq  ESTAB      0      0       * 38048                 * 0
+u_seq  ESTAB      0      0       * 38049                 * 0
+u_seq  ESTAB      0      0       * 38061                 * 0
+u_seq  ESTAB      0      0       * 38062                 * 0
+u_seq  ESTAB      0      0       * 38383                 * 0
+u_seq  ESTAB      0      0       * 38384                 * 0
+u_seq  ESTAB      0      0       * 38542                 * 0
+u_seq  ESTAB      0      0       * 38543                 * 0
+u_seq  ESTAB      0      0       * 38561                 * 0
+u_seq  ESTAB      0      0       * 38562                 * 0
+u_seq  ESTAB      0      0       * 38918                 * 0
+u_seq  ESTAB      0      0       * 38919                 * 0
+u_seq  ESTAB      0      0       * 38982                 * 0
+u_seq  ESTAB      0      0       * 38983                 * 0
+u_seq  ESTAB      0      0       * 39006                 * 0
+u_seq  ESTAB      0      0       * 39007                 * 0
+u_seq  ESTAB      0      0       * 39022                 * 0
+u_seq  ESTAB      0      0       * 39023                 * 0
+u_seq  ESTAB      0      0       * 39075                 * 0
+u_seq  ESTAB      0      0       * 39076                 * 0
+u_seq  ESTAB      0      0       * 39108                 * 0
+u_seq  ESTAB      0      0       * 39109                 * 0
+u_seq  ESTAB      0      0       * 39184                 * 0
+u_seq  ESTAB      0      0       * 39185                 * 0
+u_seq  ESTAB      0      0       * 39198                 * 0
+u_seq  ESTAB      0      0       * 39199                 * 0
+u_seq  ESTAB      0      0       * 39212                 * 0
+u_seq  ESTAB      0      0       * 39213                 * 0
+u_seq  ESTAB      0      0       * 39251                 * 0
+u_seq  ESTAB      0      0       * 39252                 * 0
+u_seq  ESTAB      0      0       * 39280                 * 0
+u_seq  ESTAB      0      0       * 39281                 * 0
+u_seq  ESTAB      0      0       * 39305                 * 0
+u_seq  ESTAB      0      0       * 39306                 * 0
+u_seq  ESTAB      0      0       * 39316                 * 0
+u_seq  ESTAB      0      0       * 39317                 * 0
+u_seq  ESTAB      0      0       * 39321                 * 0
+u_seq  ESTAB      0      0       * 39322                 * 0
+u_seq  ESTAB      0      0       * 39336                 * 0
+u_seq  ESTAB      0      0       * 39337                 * 0
+u_seq  ESTAB      0      0       * 39859                 * 0
+u_seq  ESTAB      0      0       * 39860                 * 0
+u_seq  ESTAB      0      0       * 40068                 * 0
+u_seq  ESTAB      0      0       * 40069                 * 0
+u_seq  ESTAB      0      0       * 40104                 * 0
+u_seq  ESTAB      0      0       * 40105                 * 0
+u_seq  ESTAB      0      0       * 40117                 * 0
+u_seq  ESTAB      0      0       * 40118                 * 0
+u_seq  ESTAB      0      0       * 40132                 * 0
+u_seq  ESTAB      0      0       * 40133                 * 0
+u_seq  ESTAB      0      0       * 40157                 * 0
+u_seq  ESTAB      0      0       * 40158                 * 0
+u_seq  ESTAB      0      0       * 40479                 * 0
+u_seq  ESTAB      0      0       * 40480                 * 0
+u_seq  ESTAB      0      0       * 40483                 * 0
+u_seq  ESTAB      0      0       * 40484                 * 0
+u_seq  ESTAB      0      0       * 40990                 * 0
+u_seq  ESTAB      0      0       * 40991                 * 0
+u_seq  ESTAB      0      0       * 41002                 * 0
+u_seq  ESTAB      0      0       * 41003                 * 0
+u_seq  ESTAB      0      0       * 41406                 * 0
+u_seq  ESTAB      0      0       * 41407                 * 0
+u_seq  ESTAB      0      0       * 55770                 * 0
+u_seq  ESTAB      0      0       * 55771                 * 0
+u_seq  ESTAB      0      0       * 56304                 * 0
+u_seq  ESTAB      0      0       * 56305                 * 0
+u_seq  ESTAB      0      0       * 58939                 * 0
+u_seq  ESTAB      0      0       * 58940                 * 0
+u_seq  ESTAB      0      0       * 59058                 * 0
+u_seq  ESTAB      0      0       * 59059                 * 0
+u_seq  ESTAB      0      0       * 59075                 * 0
+u_seq  ESTAB      0      0       * 59076                 * 0
+u_seq  ESTAB      0      0       * 59097                 * 0
+u_seq  ESTAB      0      0       * 59098                 * 0
+u_seq  ESTAB      0      0       * 59130                 * 0
+u_seq  ESTAB      0      0       * 59131                 * 0
+u_seq  ESTAB      0      0       * 59148                 * 0
+u_seq  ESTAB      0      0       * 59149                 * 0
+u_seq  ESTAB      0      0       * 59208                 * 0
+u_seq  ESTAB      0      0       * 59209                 * 0
+u_seq  ESTAB      0      0       * 59210                 * 0
+u_seq  ESTAB      0      0       * 59211                 * 0
+u_seq  ESTAB      0      0       * 59256                 * 0
+u_seq  ESTAB      0      0       * 59257                 * 0
+u_seq  ESTAB      0      0       * 59282                 * 0
+u_seq  ESTAB      0      0       * 59283                 * 0
+u_seq  ESTAB      0      0       * 59333                 * 0
+u_seq  ESTAB      0      0       * 59334                 * 0
+u_seq  ESTAB      0      0       * 59346                 * 0
+u_seq  ESTAB      0      0       * 59347                 * 0
+u_seq  ESTAB      0      0       * 59414                 * 0
+u_seq  ESTAB      0      0       * 59415                 * 0
+u_seq  ESTAB      0      0       * 59480                 * 0
+u_seq  ESTAB      0      0       * 59481                 * 0
+u_seq  ESTAB      0      0       * 59493                 * 0
+u_seq  ESTAB      0      0       * 59494                 * 0
+u_seq  ESTAB      0      0       * 59529                 * 0
+u_seq  ESTAB      0      0       * 59530                 * 0
+u_seq  ESTAB      0      0       * 59544                 * 0
+u_seq  ESTAB      0      0       * 59545                 * 0
+u_seq  ESTAB      0      0       * 59564                 * 0
+u_seq  ESTAB      0      0       * 59565                 * 0
+u_seq  ESTAB      0      0       * 59702                 * 0
+u_seq  ESTAB      0      0       * 59703                 * 0
+u_seq  ESTAB      0      0       * 59715                 * 0
+u_seq  ESTAB      0      0       * 59716                 * 0
+u_seq  ESTAB      0      0       * 59730                 * 0
+u_seq  ESTAB      0      0       * 59731                 * 0
+u_seq  ESTAB      0      0       * 59743                 * 0
+u_seq  ESTAB      0      0       * 59744                 * 0
+u_seq  ESTAB      0      0       * 59761                 * 0
+u_seq  ESTAB      0      0       * 59762                 * 0
+u_seq  ESTAB      0      0       * 59883                 * 0
+u_seq  ESTAB      0      0       * 59884                 * 0
+u_seq  ESTAB      0      0       * 59904                 * 0
+u_seq  ESTAB      0      0       * 59905                 * 0
+u_seq  ESTAB      0      0       * 60183                 * 0
+u_seq  ESTAB      0      0       * 60184                 * 0
+u_seq  ESTAB      0      0       * 60205                 * 0
+u_seq  ESTAB      0      0       * 60206                 * 0
+u_seq  ESTAB      0      0       * 60283                 * 0
+u_seq  ESTAB      0      0       * 60284                 * 0
+u_seq  ESTAB      0      0       * 60656                 * 0
+u_seq  ESTAB      0      0       * 60657                 * 0
+u_seq  ESTAB      0      0       * 62663                 * 0
+u_seq  ESTAB      0      0       * 62664                 * 0
+u_seq  ESTAB      0      0       * 62993                 * 0
+u_seq  ESTAB      0      0       * 62994                 * 0
+u_seq  ESTAB      0      0       * 63260                 * 0
+u_seq  ESTAB      0      0       * 63261                 * 0
+u_seq  ESTAB      0      0       * 66495                 * 0
+u_seq  ESTAB      0      0       * 66496                 * 0
+u_seq  ESTAB      0      0       * 71496                 * 0
+u_seq  ESTAB      0      0       * 71497                 * 0
+u_seq  ESTAB      0      0       * 72721                 * 0
+u_seq  ESTAB      0      0       * 72722                 * 0
+u_seq  ESTAB      0      0       * 88272                 * 0
+u_seq  ESTAB      0      0       * 88273                 * 0
+u_seq  ESTAB      0      0       * 88317                 * 0
+u_seq  ESTAB      0      0       * 88318                 * 0
+u_seq  ESTAB      0      0       * 89205                 * 0
+u_seq  ESTAB      0      0       * 89206                 * 0
+u_seq  ESTAB      0      0       * 91460                 * 0
+u_seq  ESTAB      0      0       * 91461                 * 0
+u_seq  ESTAB      0      0       * 98849                 * 0
+u_seq  ESTAB      0      0       * 98850                 * 0
+u_seq  ESTAB      0      0       * 99604                 * 0
+u_seq  ESTAB      0      0       * 99605                 * 0
+u_seq  ESTAB      0      0       * 99773                 * 0
+u_seq  ESTAB      0      0       * 99774                 * 0
+u_seq  ESTAB      0      0       * 100394                * 0
+u_seq  ESTAB      0      0       * 100395                * 0
+u_seq  ESTAB      0      0       * 100477                * 0
+u_seq  ESTAB      0      0       * 100478                * 0
+u_seq  LISTEN     0      0      /dev/socket/adbd 153464                * 0
+u_seq  ESTAB      0      0       * 153474                * 0
+u_seq  ESTAB      0      0       * 153475                * 0
+u_seq  ESTAB      0      0       * 153476                * 0
+u_seq  ESTAB      0      0       * 153477                * 0
+u_seq  ESTAB      0      0       * 153478                * 0
+u_seq  ESTAB      0      0       * 153479                * 0
+u_seq  ESTAB      0      0       * 153480                * 0
+u_seq  ESTAB      0      0       * 153481                * 0
+u_seq  ESTAB      0      0       * 153482                * 0
+u_seq  ESTAB      0      0       * 153483                * 0
+u_seq  ESTAB      0      0       * 153484                * 0
+u_seq  ESTAB      0      0       * 153485                * 0
+u_seq  ESTAB      0      0       * 153486                * 0
+u_seq  ESTAB      0      0       * 153487                * 0
+u_seq  ESTAB      0      0       * 153489                * 0
+u_seq  ESTAB      0      0       * 153490                * 0
+u_seq  ESTAB      0      0       * 153491                * 0
+u_seq  ESTAB      0      0       * 153492                * 0
+u_seq  LISTEN     0      0      @jdwp-control 156581                * 0
+u_seq  ESTAB      0      0       * 156582                * 0
+u_seq  ESTAB      0      0       * 156583                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156584                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156585                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156586                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156587                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156588                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156589                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156590                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156591                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156592                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156593                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156594                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156595                * 0
+u_seq  ESTAB      0      0       * 156596                * 0
+u_seq  ESTAB      0      0       * 156597                * 0
+u_seq  ESTAB      0      0       * 156598                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156599                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156600                * 0
+u_seq  ESTAB      0      0       * 156601                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156602                * 0
+u_seq  ESTAB      0      0       * 156603                * 0
+u_seq  ESTAB      0      0       * 156604                * 0
+u_seq  ESTAB      0      0       * 156605                * 0
+u_seq  ESTAB      0      0       * 156606                * 0
+u_seq  ESTAB      0      0       * 156607                * 0
+u_seq  ESTAB      0      0       * 156608                * 0
+u_seq  ESTAB      0      0       * 156609                * 0
+u_seq  ESTAB      0      0       * 156610                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156611                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156612                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156613                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156614                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156615                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156616                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156617                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156618                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156619                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156620                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156621                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156622                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156623                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156624                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156625                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156626                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156627                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156628                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156629                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156630                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156631                * 0
+u_seq  ESTAB      0      0       * 156632                * 0
+u_seq  ESTAB      0      0       * 156633                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156634                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156635                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156636                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156637                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156638                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156639                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156640                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156641                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156642                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156643                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156644                * 0
+u_seq  ESTAB      0      0       * 156645                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156646                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156647                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156648                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156649                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156650                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156651                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156652                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156653                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156654                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156655                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156656                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156657                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156658                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156659                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156660                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156661                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156662                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156663                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156664                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156665                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156666                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156668                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156669                * 0
+u_seq  ESTAB      0      0      @jdwp-control 156671                * 0
+u_seq  ESTAB      0      0       * 157154                * 0
+u_seq  ESTAB      0      0       * 157155                * 0
+u_seq  ESTAB      0      0       * 157156                * 0
+u_seq  ESTAB      0      0       * 157157                * 0
+u_seq  ESTAB      0      0       * 157158                * 0
+u_seq  ESTAB      0      0       * 157159                * 0
+u_seq  ESTAB      0      0       * 157160                * 0
+u_seq  ESTAB      0      0       * 157161                * 0
+u_seq  ESTAB      0      0       * 157162                * 0
+u_seq  ESTAB      0      0       * 157163                * 0
+u_seq  ESTAB      0      0       * 157164                * 0
+u_seq  ESTAB      0      0       * 157165                * 0
+u_seq  ESTAB      0      0       * 157166                * 0
+u_seq  ESTAB      0      0       * 157169                * 0
+u_seq  ESTAB      0      0       * 157170                * 0
+u_seq  ESTAB      0      0       * 157171                * 0
+u_seq  ESTAB      0      0       * 157172                * 0
+u_seq  ESTAB      0      0       * 158193                * 0
+u_seq  ESTAB      0      0       * 158194                * 0
+u_seq  ESTAB      0      0       * 158195                * 0
+u_seq  ESTAB      0      0       * 158196                * 0
+u_seq  ESTAB      0      0       * 158197                * 0
+u_seq  ESTAB      0      0       * 158198                * 0
+u_seq  ESTAB      0      0       * 158199                * 0
+u_seq  ESTAB      0      0       * 158200                * 0
+u_seq  ESTAB      0      0       * 158201                * 0
+u_seq  ESTAB      0      0       * 158202                * 0
+u_seq  ESTAB      0      0       * 158203                * 0
+u_seq  ESTAB      0      0       * 158204                * 0
+u_seq  ESTAB      0      0       * 158205                * 0
+u_seq  ESTAB      0      0       * 158206                * 0
+u_seq  ESTAB      0      0       * 158207                * 0
+u_seq  ESTAB      0      0       * 158208                * 0
+u_seq  ESTAB      0      0       * 158209                * 0
+u_seq  ESTAB      0      0       * 158210                * 0
+u_seq  ESTAB      0      0       * 158211                * 0
+u_seq  ESTAB      0      0       * 158212                * 0
+u_seq  ESTAB      0      0       * 158213                * 0
+u_seq  ESTAB      0      0       * 158551                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158766                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158767                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158768                * 0
+u_seq  ESTAB      0      0       * 158769                * 0
+u_seq  ESTAB      0      0       * 158770                * 0
+u_seq  ESTAB      0      0       * 158771                * 0
+u_seq  ESTAB      0      0       * 158772                * 0
+u_seq  ESTAB      0      0       * 158773                * 0
+u_seq  ESTAB      0      0       * 158774                * 0
+u_seq  ESTAB      0      0       * 158775                * 0
+u_seq  ESTAB      0      0       * 158776                * 0
+u_seq  ESTAB      0      0       * 158777                * 0
+u_seq  ESTAB      0      0       * 158778                * 0
+u_seq  ESTAB      0      0       * 158779                * 0
+u_seq  ESTAB      0      0       * 158780                * 0
+u_seq  ESTAB      0      0       * 158781                * 0
+u_seq  ESTAB      0      0       * 158782                * 0
+u_seq  ESTAB      0      0       * 158783                * 0
+u_seq  ESTAB      0      0       * 158784                * 0
+u_seq  ESTAB      0      0       * 158785                * 0
+u_seq  ESTAB      0      0       * 158786                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158787                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158788                * 0
+u_seq  ESTAB      0      0       * 158789                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158790                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158791                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158792                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158793                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158794                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158795                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158796                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158797                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158798                * 0
+u_seq  ESTAB      0      0      @jdwp-control 158799                * 0
+u_seq  ESTAB      0      0       * 158800                * 0
+u_seq  ESTAB      0      0       * 158801                * 0
+u_seq  ESTAB      0      0       * 158802                * 0
+u_seq  ESTAB      0      0       * 158803                * 0
+u_seq  ESTAB      0      0       * 158805                * 0
+u_seq  ESTAB      0      0       * 158806                * 0
+u_seq  ESTAB      0      0       * 158807                * 0
+u_seq  ESTAB      0      0       * 158808                * 0
+u_seq  ESTAB      0      0       * 158811                * 0
+u_seq  ESTAB      0      0       * 158812                * 0
+u_seq  ESTAB      0      0      /dev/socket/adbd 158813                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159745                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159746                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159748                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159749                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159750                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159751                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159752                * 0
+u_seq  ESTAB      0      0       * 159754                * 0
+u_seq  ESTAB      0      0       * 159755                * 0
+u_seq  ESTAB      0      0       * 159756                * 0
+u_seq  ESTAB      0      0       * 159757                * 0
+u_seq  ESTAB      0      0       * 159758                * 0
+u_seq  ESTAB      0      0       * 159759                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159761                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159762                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159763                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159764                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159766                * 0
+u_seq  ESTAB      0      0       * 159768                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159769                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159770                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159771                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159772                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159773                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159774                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159775                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159776                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159778                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159779                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159780                * 0
+u_seq  ESTAB      0      0       * 159781                * 0
+u_seq  ESTAB      0      0       * 159850                * 0
+u_seq  ESTAB      0      0       * 159851                * 0
+u_seq  ESTAB      0      0      @jdwp-control 159852                * 0
+u_seq  ESTAB      0      0       * 691195                * 0
+u_seq  ESTAB      0      0       * 691196                * 0
+u_seq  ESTAB      0      0       * 694335                * 0
+u_seq  ESTAB      0      0       * 694336                * 0
+udp    UNCONN     0      0      0.0.0.0:41413                0.0.0.0:*
+udp    ESTAB      0      0      127.0.0.1:54015                127.0.0.1:54015
+udp    ESTAB      0      0      127.0.0.1:50044                127.0.0.1:50044
+udp    ESTAB      0      0      10.23.0.2:54435                10.23.0.3:51100
+udp    UNCONN     0      0      0.0.0.0:mdns                 0.0.0.0:*
+udp    UNCONN     0      0      0.0.0.0:mdns                 0.0.0.0:*
+udp    UNCONN     0      0      0.0.0.0:mdns                 0.0.0.0:*
+udp    ESTAB      0      0      10.23.0.2:42256                10.23.0.3:51000
+udp    ESTAB      0      0      127.0.0.1:46430                127.0.0.1:46430
+udp    ESTAB      0      0      10.23.0.2:50624                10.23.0.3:51001
+udp    ESTAB      0      0      10.23.0.2:50757                10.23.0.3:51200
+udp    ESTAB      0      0      10.23.0.2:59030                10.23.0.3:51100
+udp    UNCONN     0      0      0.0.0.0:30489                0.0.0.0:*
+udp    UNCONN     0      0      0.0.0.0:38716                0.0.0.0:*
+udp    UNCONN     0      0      10.23.0.2:51201                0.0.0.0:*
+udp    UNCONN     0      0      10.23.0.2:51250                0.0.0.0:*
+udp    ESTAB      0      0      10.23.0.2:43087                10.23.0.3:51401
+udp    UNCONN     0      0      10.23.0.2:51301                0.0.0.0:*
+udp    UNCONN     0      0      10.23.0.2:51302                0.0.0.0:*
+udp    UNCONN     0      0      10.23.0.2:51305                0.0.0.0:*
+udp    UNCONN     0      0      10.23.0.2:51306                0.0.0.0:*
+udp    UNCONN     0      0      10.23.0.2:51307                0.0.0.0:*
+udp    UNCONN     0      0      10.23.0.2:51309                0.0.0.0:*
+udp    UNCONN     0      0      10.23.0.2:51311                0.0.0.0:*
+udp    UNCONN     0      0      10.23.0.2:51312                0.0.0.0:*
+udp    UNCONN     0      0      10.23.0.2:51313                0.0.0.0:*
+udp    ESTAB      0      0      127.0.0.1:59523                127.0.0.1:59523
+udp    ESTAB      0      0      10.23.0.2:59557                10.23.0.3:51300
+udp    UNCONN     0      0      10.23.0.2:51377                0.0.0.0:*
+udp    ESTAB      0      0      10.23.0.2:60774                10.23.0.3:51376
+udp    UNCONN     0      0      127.0.0.1:56790                0.0.0.0:*
+udp    ESTAB      0      0      127.0.0.1:41083                127.0.0.1:41083
+udp    UNCONN     0      0        [::]:mdns                   [::]:*
+udp    UNCONN     0      0        [::]:mdns                   [::]:*
+udp    UNCONN     0      0        [::]:mdns                   [::]:*
+udp    UNCONN     0      0        [::]:48293                  [::]:*
+udp    UNCONN     0      0        [::]:44208                  [::]:*
+tcp    LISTEN     0      5      10.23.0.2:51377                0.0.0.0:*
+tcp    LISTEN     0      5      10.23.0.2:51250                0.0.0.0:*
+tcp    LISTEN     0      5      127.0.0.1:56790                0.0.0.0:*
+tcp    LISTEN     0      128    0.0.0.0:afs3-fileserver      0.0.0.0:*
+tcp    LISTEN     0      1      127.0.0.1:9720                 0.0.0.0:*
+tcp    LISTEN     0      1      127.0.0.1:9721                 0.0.0.0:*
+tcp    LISTEN     0      1      127.0.0.1:9722                 0.0.0.0:*
+tcp    LISTEN     0      5      0.0.0.0:2500                 0.0.0.0:*
+tcp    LISTEN     0      5      10.23.0.2:51306                0.0.0.0:*
+tcp    LISTEN     0      5      10.23.0.2:51307                0.0.0.0:*
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52518
+tcp    ESTAB      0      0      127.0.0.1:52516                127.0.0.1:56790
+tcp    ESTAB      0      0      10.23.0.2:51307                10.23.0.3:65525
+tcp    ESTAB      0      0      127.0.0.1:52514                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52534
+tcp    ESTAB      0      0      10.23.0.2:49318                10.23.0.3:51401
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52520
+tcp    ESTAB      0      0      127.0.0.1:52520                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:52504                127.0.0.1:56790
+tcp    ESTAB      0      0      10.23.0.2:36742                10.23.0.3:51376
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52512
+tcp    ESTAB      0      0      127.0.0.1:52512                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52536
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52522
+tcp    ESTAB      0      0      127.0.0.1:52536                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:52530                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52516
+tcp    ESTAB      0      0      127.0.0.1:52538                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52528
+tcp    ESTAB      0      0      127.0.0.1:52522                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52504
+tcp    ESTAB      0      0      127.0.0.1:52534                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:52532                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52514
+tcp    ESTAB      0      0      127.0.0.1:52508                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:52528                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52532
+tcp    ESTAB      0      0      10.23.0.2:51377                10.23.0.3:65527
+tcp    ESTAB      0      0      127.0.0.1:52518                127.0.0.1:56790
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52508
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52538
+tcp    ESTAB      0      0      10.23.0.2:51306                10.23.0.3:65526
+tcp    ESTAB      0      0      10.23.0.2:51501                10.23.0.3:50650
+tcp    ESTAB      0      0      10.23.0.2:51500                10.23.0.3:50650
+tcp    ESTAB      0      0      127.0.0.1:56790                127.0.0.1:52530
+tcp    ESTAB      0      0      10.23.0.2:51250                10.23.0.3:65528
+tcp    LISTEN     0      50      *:http-alt              *:*
+tcp    LISTEN     0      4       *:5555                  *:*
+tcp    LISTEN     0      50      *:30515                 *:*
+tcp    LISTEN     0      128      [::]:afs3-fileserver        [::]:*
+tcp    LISTEN     0      4       *:5037                  *:*
+console:/ #

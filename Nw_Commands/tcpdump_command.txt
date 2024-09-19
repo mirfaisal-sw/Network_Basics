@@ -1,0 +1,9 @@
+
+
+Run below command on Linux target: -
+--------------------------------------
+
+# tcpdump -i <interface_name> -w <pcap file name>
+
+Example: -
+	tcpdump -i eth0 -w log.pcap
