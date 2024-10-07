@@ -1,0 +1,11 @@
+
+
+
+I. To check link status
+-------------------------
+
+# ip link show eth0
+O/p - ...UP.. {In case, link is UP}
+
+# ip link show eth0
+O/p - ...NO-CARRIER.. {In case, link is DOWN}
