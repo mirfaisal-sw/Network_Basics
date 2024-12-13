@@ -1,0 +1,22 @@
+#
+# Vsink MVIF Driver
+#
+config V4L2_MVIF
+    tristate "Vsink MVIF Driver"
+    depends on VIDEO_DEV && VIDEO_V4L2
+	select VIDEOBUF2_CORE
+	select VIDEOBUF2_MEMOPS
+    default n
+    help
+      Enables this driver to support MVIF based video streaming on J6
+	  borad using the v4l2 framework
+      Say Y here if you want to use MVIF to stream video to other cores
+      In doubt, say N.
+
+config V4L2_V1
+    tristate "V4L2 ORIGINAL"
+     default n
+     help
+       Enable this feature if you want use old implimentation
+       or say N so that new implimentation will be used.
+

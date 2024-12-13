@@ -1,0 +1,43 @@
+		Elina Source Delivery
+
+
+ABOUT :
+	This is to tackle A tricky problem when distributing source code that is under various forms of NDAs
+or if that code is not relevant to the project to which we have to deliver source code. This tool will strip off
+such code from the source before delivered.
+
+	This tool will first checkout the Linux source to "Rel_tag" specified on the commandline 
+then censor the code under the CONFIG_TAGS specified in the "config_tags" array in the code_censor.sh.
+Source will be copied to DEST_DIR (you should specify on cmdline while running copy_src.sh. see
+the help for more info).
+Files listed in a txt file(Exclude_xyz.txt, which is cmdline arguement to script) will be removed, 
+creates a tar file with name you mention on commandline with .tar.gz suffix then save it in DEST_DIR.
+Tar file can be delivered to customer.
+
+
+REQUIREMENT:
+	1. There should be linux source code.
+	2. copy code_censor_tesla.sh, copy_src.sh, Exclude_tesla.txt and skip_file_censor_tesla.txt to the Linux build directory (source directory).
+	3. These guidelines and instructions are only for Tesla target.
+
+HOW TO START:
+	Add the CONFIG_TAGS if required in "config_tags" array, the code block under which needs to be censored
+	Add the CONFIG_TAG if required in "exclude_tags" array to uncensor the code under this tag for example
+		there is a statement like "#if defined(CONFIG_TAG1) || defined(CONFIG_TAG2)" this means code block belongs to
+		both the targets/projects and in such circumstances if you  don't want to remove code under "CONFIG_TAG2"
+		add it to "exclude_tags" array in the code_censor.sh
+
+	1. Sync Elina_Stable branch
+	2. Copy code censor scripts (code_censor_tesla.sh, copy_src.sh, Exclude_tesla.txt and skip_file_censor_tesla.txt) to the kernel source directory
+	3. Ensure there are no local changes in kernel source and run “git stash”  if you are repeatedly running code censor tool(however this is included in the script as well)
+	4. Run code censor tool in the kernel source directory(kernel build directory)  as shown here “./code_censor_tesla.sh Exclude_tesla.txt Rel_Elina_J5Entry_TUNERGEN2_18013A”    where Rel_Elina_J5Entry_TUNERGEN2_18013A is the latest kernel tag and you can give any tag of you wish.
+	5. Then run copy_src.sh from kernel source/build directory as shown here
+		“./copy_src.sh  < Exclude_tesla.txt> <Destination_dir>  <tar_file_name without \"tar.gz\" suffix>”
+		a. The second arguement i.e <Destination_dir> should be outside of kernel src dir
+			- /home/nababu/workspace/nbabu/ti_lts_4.4 is the kernel src dir and destination directory path should be like
+			- /home/nababu/workspace/nbabu/Tesla_src_delivr 
+		b. Ex  ./copy_src.sh Exclude_tesla.txt  /home/nababu/workspace/nbabu/Code_censor_tesla  J5Entry_TUNERGEN2_18013A
+		c. Then the tar file with the name J5Entry_TUNERGEN2_18013A.tar.gz will be created at /home/nababu/workspace/nbabu/Code_censor_tesla/
+			directory  which is to be delivered to customer
+	6. Verify this by compiling for tesla target.
+

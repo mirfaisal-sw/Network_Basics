@@ -1,0 +1,66 @@
+#
+# SFI driver configuration
+#
+
+menuconfig EXYNOS_SFI_IPC
+	tristate "SFI IPC driver support"
+	help
+	  Enable SFI IPC support
+
+menuconfig EXYNOS_SFI_CR52C1
+	tristate "CORE1 SFI IPC driver support"
+	help
+	  Enable CORE1 SFI IPC support
+
+if EXYNOS_SFI_IPC
+
+	config EXYNOS_SFI_IPC_TEST
+		tristate "SFI IPC driver test"
+		depends on EXYNOS_SFI_IPC
+		default n
+		help
+			Enable SFI IPC Test support
+
+	config EXYNOS_SFI_CLI
+		tristate "sfi cli support"
+		depends on EXYNOS_SFI_IPC
+		default n
+		help
+			This enables support for SFI console interface
+
+	config EXYNOS_SFI_DUMP
+		tristate "sfi dump support"
+		depends on EXYNOS_SFI_IPC
+		default n
+		help
+			This enables support for SFI dump feature
+
+    config EXYNOS_SFI_CLKMON
+		tristate "sfi clkmon support"
+		depends on EXYNOS_SFI_IPC
+		default n
+		help
+			This enables support for SFI CLKMON feature
+
+endif
+
+if EXYNOS_SFI_CR52C1
+
+	config EXYNOS_SFI_IPC_TEST_C1
+		tristate "CORE1 SFI IPC driver test"
+		depends on EXYNOS_SFI_CR52C1
+		default n
+		help
+			Enable CORE1 SFI IPC Test support
+
+	config EXYNOS_SFI_CLI_C1
+		tristate "sfi core1 cli support"
+		depends on EXYNOS_SFI_CR52C1
+		default n
+		help
+			This enables support for SFI CORE1 console interface
+
+endif
+
+
+

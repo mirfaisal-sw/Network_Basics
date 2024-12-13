@@ -1,0 +1,9 @@
+set title "Stock-Linux: wakeup-rt"
+	set terminal png
+	set xlabel "Latency (us), max 4786\us min 35\us avg 167\us"
+	set logscale y
+	set xrange [0:400]
+	set yrange [0.8:*]
+	set ylabel "Number of latency samples"
+	set output "plot_wakeup-rt.png"
+	plot "histogram1" using 1:2 title " CPU0 -> Min:00035\us Max:03448\us Avg:00167\us" with histeps, "histogram2" using 1:2 title " CPU1 -> Min:00031\us Max:04684\us Avg:00152\us" with histeps, "histogram3" using 1:2 title " CPU2 -> Min:00029\us Max:04534\us Avg:00122\us" with histeps, "histogram4" using 1:2 title " CPU3 -> Min:00031\us Max:04786\us Avg:00107\us" with histeps, "histogram5" using 1:2 title " CPU4 -> Min:00009\us Max:00426\us Avg:00018\us" with histeps, "histogram6" using 1:2 title " CPU5 -> Min:00008\us Max:00558\us Avg:00016\us" with histeps

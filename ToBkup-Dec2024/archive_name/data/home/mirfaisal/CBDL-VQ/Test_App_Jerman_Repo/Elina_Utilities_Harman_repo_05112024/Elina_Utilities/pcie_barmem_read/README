@@ -1,0 +1,47 @@
+PCIE BAR MEM utility: -
+========================
+
+Usage: ./pcie_barmem -s <AAAA:BB:DD.F> -w <access_width> -n [no. of bytes to read]
+
+-s <device>: 
+------------
+Device ID : AAAA:BB:DD.F :: This is specific to a PCIe device, which can be found 
+from lspci output.
+
+AAAA : Address domain
+BB: Bus number of the PCIe device
+DD: Device number of the PCIe device
+FF: Function number of the PCIe device
+
+This info can be found from "lspci" tool, as below.
+
+#lspci -v
+Output: -
+
+0001:01:00.0 Class 0280: Device 12be:bd31 (rev 01)
+....
+....
+Here we can see the -s value used with tool is "0001:01:00.0".
+
+-b <BAR>: 
+-----------
+BAR number: A device can have multiple BARs, we can select a particular BAR number 
+using this option.
+
+-w <access_width>:
+-------------------
+Data format in hexdump can be selected by this option. It can be byte, half word, 
+word or double word, which can be selcted by using 8, 16, 32, 64 respectively to
+this option.
+
+-n [Bytes]: 
+------------
+This command line option is optional. It gives the user to ask the application how
+many bytes to be read. If this option is absent, then it will do hexdump of entire 
+BAR region.
+
+
+TODO : -
+------
+To add memory write functionality as well.
+

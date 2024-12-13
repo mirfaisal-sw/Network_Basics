@@ -1,0 +1,12 @@
+[Unit]
+Description=Switch configuration
+Before=network-pre.target
+Wants=network-pre.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/switch_config_util
+
+[Install]
+WantedBy=multi-user.target
+

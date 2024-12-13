@@ -1,0 +1,95 @@
+
+/***********************************************************************************************
+ Uart Utility: serial-latency-test
+ ***********************************************************************************************
+ Uart Latency -
+ =============
+ Uart Tx latency refers to the time difference between start of data transmission
+ from User Application and the Tx complete event at Uart controller hardware register level.
+ Similarly,  the latency of a UART receiver is the delay between the time when new data arrives
+ in the receiver (Hardware register) and the time the software reads the data buffer.
+
+ In Linux environment, to measure Tx or Rx UART latency we will have to take timestamp in Uart
+ low level driver, so it is difficult to do so using a user test application. So, the easy way
+ is to measure Uart latency in loopback or round trip mode, in which case Uart latency is the
+ time difference before write and after read operation.
+
+ This tool meausres UART latency in Uart loopback mode only. As, in OS environment the latency
+ value may differ in each iterations, due to this this application can measure Uart latency in
+ N number of samples, provided by user option.
+ This application has capability to measure Average, Minimum and Maximum Uart-Roundtrip-Latency.
+ Apart from this, it also calculates histogram to get distribution of various Uart latency samples
+ , it helps to know no of samples falling in certain latency range.
+
+ To measure accurate latency, timestamping is done in nano seconds resolution and time stamp
+ functions are declared as inline to avoid time measurement variations or error occuring due
+ to stack allocation and deallocation.
+
+ Note - To meausure Uart Latency in round trip, Uart's internal loopback must be enabled or else
+ Tx and Rx pin should be shorted electrically for the Uart port under test.
+
+
+ Usage: -
+ ========
+ 1. To know command line options: -
+
+ # ./serial-latency-test -h
+ O/p -
+ Usage: ./serial-latency-test -p <port> ...
+
+  -p, --port=port    serial port to run tests on
+  -b, --baud=baud    baud rate (default: 9600)
+  -R, --realtime     use realtime scheduling (default: no)
+  -P, --priority=n   scheduling priority, use with -R
+                     (default: 99)
+
+  -S, --samples=n    to take for the measurement (default: 10000)
+  -c, --count=n      number of bytes to send per sample (default: 1)
+  -w, --wait=ms      time interval between measurements (default: 0)
+  -r, --random-wait  use random interval between wait and 2*wait
+
+  -x  --xmit=n       set xmit_fifo_size to given number (default: 0)
+  -o, --output=file  write the output to file
+
+  -h, --help         this help
+  -V, --version      print current version
+
+  Report bugs to Mir Faisal <Mir.Faisal@harman.com>
+
+ 2. To know version information: -
+
+ # ./serial-latency-test -V
+ O/p -
+ serial-latency-test version 1.0 dated: 28-Jul-2022
+
+ 3. To measure Uart latency in round trip: -
+
+ # ./serial-latency-test -p /dev/ttySAC4 -b 115200 -R -P 98 -S 1000 -c 1 -o mir.txt
+ O/p -
+ # serial-latency-test version 1.0 dated: 28-Jul-2022
+ # set_realtime_priority(SCHED_FIFO, 98).. done.
+ src/serial.c:101: opening port /dev/ttySAC4 @ 115200 bps
+
+ # sampling 1000 latency values - please wait..
+   event     curr      min      max      avg [ms]
+     266     0.21     0.20     2.60     0.23
+     494     0.21     0.20     2.60     0.22
+     768     0.21     0.20     2.60     0.22
+     999     0.21     0.19     2.60     0.22
+ # done.
+
+ # latency distribution:
+
+  0.00 ..  0.21 [ms]:  998 ##################################################
+  0.21 ..  1.29 [ms]:    1 #
+  1.29 ..  2.38 [ms]:    0
+  2.38 ..  3.47 [ms]:    0
+  3.47 ..  4.56 [ms]:    0
+  4.56 ..   inf [ms]:    0
+
+ best    latency is 0.19 ms
+ worst   latency is 2.60 ms
+ average latency is 0.22 ms
+
+ Note - Above application can create output file also containg measured Uart latency
+       sample values.

@@ -1,0 +1,44 @@
+DSPIPCPATH := $(PWD)
+obj-m := dspipc.o
+dspipc-objs := dev-dspipc.o
+dspipc-objs += debug.o
+dspipc-objs += Memobj.o
+dspipc-objs += malloc_trc.o
+dspipc-objs += Options.o
+dspipc-objs += dspipc_pthread.o
+dspipc-objs += cache_ops.o
+dspipc-objs += misc.o
+dspipc-objs += msgqueue.o
+dspipc-objs += device.o
+dspipc-objs += string_def.o
+dspipc-objs += sendthread.o
+dspipc-objs += subdevice.o
+dspipc-objs += intthread.o
+dspipc-objs += iofuncs.o
+dspipc-objs += dra7xx/dspipc-dra7xx.o
+dspipc-objs += dra7xx/elf.o
+#dspipc-objs += syslinks/src/dspipc-syslinks.o
+
+EXTRA_CFLAGS += -DUSE_DSP_SHM
+EXTRA_CFLAGS += -DCHIP_DRA7XX
+#EXTRA_CFLAGS += -DCHIP_SYSLINKS
+EXTRA_CFLAGS += -DVERBOSE_ENABLE
+EXTRA_CFLAGS += -DNEW_ROOT_POINTER_STRUCT
+
+EXTRA_CFLAGS += -I$(DSPIPCPATH)
+EXTRA_CFLAGS += -I$(DSPIPCPATH)/import/include
+EXTRA_CFLAGS += -I$(DSPIPCPATH)/import/include/dsp
+EXTRA_CFLAGS += -I$(DSPIPCPATH)/import/include/dsp/common
+#EXTRA_CFLAGS += -I$(DSPIPCPATH)/import/include/syslinks
+#EXTRA_CFLAGS += -I$(DSPIPCPATH)/import/include/syslinks/ti/ipc
+#EXTRA_CFLAGS += -I$(DSPIPCPATH)/import/include/syslinks/ti/syslink
+
+#export PATH:=$(DSPIPCPATH)/../../gcc-linaro-arm-linux-gnueabihf-4.7-2013.03-20130313_linux/bin:$(PATH)
+
+all: 
+	make CROSS_COMPILE=arm-linux-gnueabihf- ARCH=arm -C $(DSPIPCPATH)/../../Kernel_2 M=$(PWD) modules
+
+clean: 
+	rm -f *.o *.ko *.order *.mod.c *.symvers
+	find . -name "*.o" | xargs rm -f
+
