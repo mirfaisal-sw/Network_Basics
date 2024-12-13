@@ -1,0 +1,8 @@
+#
+# SPI DYNAMIC NODE
+#
+config SPI_DYNAMIC_NODE
+	tristate "Support for dynamic SPI device node creation"
+	depends on SPI && SPI_OMAP24XX && HARMAN_DRIVERS
+	help
+		Support for dynamic SPI device node creation.

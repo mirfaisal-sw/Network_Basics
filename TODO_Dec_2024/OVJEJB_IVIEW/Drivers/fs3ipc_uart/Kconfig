@@ -1,0 +1,31 @@
+#
+# FS3IPC UART IOC IPC driver configuration
+#
+
+menuconfig FS3IPC_UART
+	tristate "UART based FS3IPC IOC IPC Driver"
+	depends on SERIAL_DEV_CTRL_TTYPORT
+	default n
+	help
+	   This enables UART based FS3IPC IOC IPC Driver.
+
+if FS3IPC_UART
+
+config FS3IPC_DEBUG
+	bool "For FS3IPC_UART statistics via /dev/ipcdebug"
+	help
+	  Say Y here if you want to enable FS3IPC_UART driver
+	  statistics via /dev/ipcdebug.
+
+config FS3IPC_SIMULATE_TXRX
+	bool "Enable simulateTx and simulateRx for FS3IPC"
+	depends on FS3IPC_DEBUG
+	help
+	  Say Y here if you want to enable simulateTx and simulateRx
+	  via /dev/ipcdebug that can be used to simulate the IPC
+	  message communication with IOC. Keep this disabled in
+	  production environment to avoid security concern of
+	  enabling/disabling critical functionality like watchdog
+	  over FS3IPC.
+
+endif #FS3IPC_UART

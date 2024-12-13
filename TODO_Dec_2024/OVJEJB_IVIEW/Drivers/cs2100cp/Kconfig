@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+config CIRRUS_CS2100_PLL
+	tristate "support for PLL driver on I2C bus"
+	default n
+	select REGMAP
+	select REGMAP_I2C
+	help
+	  This Regmap I2C driver configures the Cirrus Logic
+	  CS2100 PLL for high accuracy output. The CS2100-CP
+	  is an extremely versatile system clocking device
+	  that utilizes a programmable phase lock loop.

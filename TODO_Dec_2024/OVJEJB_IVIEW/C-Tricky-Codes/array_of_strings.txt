@@ -1,0 +1,50 @@
+
+Array of pointers and tricky code
+====================================
+
+References: - https://overiq.com/c-programming-101/array-of-strings-in-c/
+
+char ch_arr[3][10] = {
+                         "spike",
+                         "tom",
+                         "jerry"
+                     };
+					 
+=> The ch_arr is a pointer to an array of 10 characters or int(*)[10].
+Therefore, if ch_arr points to address 1000 then ch_arr + 1 will point to address 1010.
+
+
+=> ch_arr + i points to the ith string or ith 1-D array.
+
+Ex - 
+(ch_arr + 0) will point to 0th 1-D array i.e. 's', 'p', 'i', 'k', 'e', '\0'
+(ch_arr + 1) will point to 1st 1-D array i.e. 't'. 'o', 'm', '\0'
+
+=> *(ch_arr + i) + j => points to jth character of ith 1-D array.
+
+Note that the base type of *(ch_arr + i) + j is a pointer to char or (char*),
+while the base type of ch_arr + i is array of 10 characters or int(*)[10].
+
+=> To get the element at jth position of ith 1-D array just dereference the whole 
+expression*(ch_arr + i) + j that is "*(*(ch_arr + i) + j)".
+
+"*(*(ch_arr + i) + j)" is equivalent to "ch_arr[i][j]".
+
+
+Note: -
+-------
+1. char ch_arr[3][10];
+
+	We already know that the name of an array is a constant pointer so the following operations are invalid.
+
+	ch_arr[0] = "tyke";   // invalid
+	ch_arr[1] = "dragon"; // invalid
+	
+	Here we are trying to assign a string literal (a pointer) to a constant pointer which is obviously not possible.
+	
+	To assign a new string to ch_arr use the following methods.
+	
+	strcpy(ch_arr[0], "type"); // valid
+	scanf(ch_arr[0], "type");  // valid
+
+	

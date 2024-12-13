@@ -1,0 +1,45 @@
+
+
+Use of delete-property: -
+==========================
+
+File: some_file.dtsi
+---------------------
+mtl_tx_setup: tx-queues-config {
+	snps,tx-queues-to-use = <16>;
+	snps,tx-sched-wrr;
+ 
+	//....
+	
+	queue5 {
+			snps,weight = <0x1>;
+			snps,dcb-algorithm;
+			snps,priority = <0x20>;
+	};
+	queue6 {
+			snps,weight = <0x1>;
+			snps,dcb-algorithm;
+			snps,priority = <0x40>;
+	};
+				
+	//....
+};
+
+File: some_other_file.dtsi
+---------------------------
+&mtl_rx_setup {
+
+	//....
+	queue5 {
+		/delete-property/ snps,dcb-algorithm;
+		snps,avb-algorithm;
+		snps,dynamic-mapping;
+	};
+	queue6 {
+		/delete-property/ snps,dcb-algorithm;
+		snps,avb-algorithm;
+		snps,dynamic-mapping;
+	};
+	//....
+	
+};

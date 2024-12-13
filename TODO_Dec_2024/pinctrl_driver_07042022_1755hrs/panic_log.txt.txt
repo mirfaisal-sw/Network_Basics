@@ -1,0 +1,68 @@
+insmod dynamic_spi_pnode.ko mode=3.4.14/kernel/drivers/harman/dynamic_spi_node#
+[   26.703735] Unable to handle kernel NULL pointer dereference at virtual address 00000000
+[   26.712118] pgd = c626c000
+[   26.714951] [00000000] *pgd=00000000
+[   26.718758] Internal error: Oops: 805 [#1] ARM
+[   26.723236] Modules linked in: dynamic_spi_pnode(+) asix usbnet mii usb_storage musb_am335x musb_dsps musb_hdrc ehci_omap ehci_hcd usbcore v4l2_mvif phy_am335x videobuf2_memops phy_am335x_control videobuf2_v4l2 phy_generic usb_common videobuf2_core
+[   26.745610] CPU: 0 PID: 927 Comm: insmod Not tainted 4.4.14 #ElinaPNP_J5Entry_NTG7CSB_22094A-9-g436f08a78fe4
+[   26.755491] Hardware name: Generic AM33XX (Flattened Device Tree)
+[   26.761624] task: c6254b80 ti: c625c000 task.ti: c625c000
+[   26.767077] PC is at init_spi0_pinctrl+0x2c/0x90 [dynamic_spi_pnode]
+[   26.773500] LR is at static_vmlist+0x0/0x8
+[   26.777629] pc : [<bf0fd628>]    lr : [<c07acf6c>]    psr: a0010013
+[   26.777629] sp : c625dd58  ip : 44000000  fp : c625dd6c
+[   26.789172] r10: bf0fd940  r9 : c6264088  r8 : 00000000
+[   26.794431] r7 : c6264240  r6 : c07ab268  r5 : bf0fdb40  r4 : 00000000
+[   26.800997] r3 : 00000000  r2 : c7eddfb0  r1 : 44ffffff  r0 : f6e10000
+[   26.807569] Flags: NzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
+[   26.814748] Control: 10c5387d  Table: 8626c019  DAC: 00000051
+[   26.820531] Process insmod (pid: 927, stack limit = 0xc625c210)
+[   26.826488] Stack: (0xc625dd58 to 0xc625e000)
+[   26.830879] dd40:                                                       bf0fdb48 bf0fdb40
+[   26.839116] dd60: c625dddc c625dd70 bf0fd030 bf0fd608 c6264240 00000000 c6264088 bf0fd940
+[   26.847352] dd80: c625ddb4 c625dd90 c02b8e2c c02b62c8 c70ddcc0 c625ddd8 bf0fd940 bf0fd000
+[   26.855587] dda0: c6264200 bf0fd988 c625ddd0 c625ddb8 c02b8ed4 c07ab268 bf0fd000 c07ab268
+[   26.863823] ddc0: c6264240 00000000 c6264088 bf0fd940 c625de54 c625dde0 c0009774 bf0fd00c
+[   26.872059] dde0: 0000000c bf0fd940 c625de0c c625ddf8 c05359c8 c053521c c7001f00 00000001
+[   26.880295] de00: c625de1c c625de10 c0535a20 c05359b4 c625de54 c625de20 c01161c8 c05359e4
+[   26.888530] de20: c0116e28 c01165d8 00000001 bf0fd940 00000001 bf0fd940 00000001 c6264200
+[   26.896766] de40: bf0fd988 00000001 c625de7c c625de58 c00da5a4 c00096b4 c6264080 bf0fd988
+[   26.905002] de60: c625de7c c625df44 00000001 c6264080 c625df34 c625de80 c008c314 c00da53c
+[   26.913237] de80: bf0fd94c 00007fff bf0fd940 c0089dcc c01263a0 c053fd0c 00000000 bf0fd94c
+[   26.921473] dea0: bf0fdb00 c861c118 00000000 bf0fda58 7f673008 c625df44 c861a000 00002168
+[   26.929707] dec0: 000020ae 00000000 0000000f 00000000 00000000 00000000 00000000 00000000
+[   26.937941] dee0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[   26.946176] df00: 00000000 00000000 00000018 00000000 00000003 7f673008 0000017b c0010744
+[   26.954413] df20: c625c000 00000000 c625dfa4 c625df38 c008cac0 c008a56c 00000002 00000000
+[   26.962649] df40: 00000000 c861a000 00002168 c861bdf8 c861b025 c861b708 00000b4c 00000edc
+[   26.970883] df60: 00000000 00000000 00000000 00000948 00000014 00000015 0000000d 0000000b
+[   26.979119] df80: 00000005 00000000 00000000 00000000 bec62b90 7f673018 00000000 c625dfa8
+[   26.987353] dfa0: c00105a0 c008ca30 00000000 bec62b90 00000003 7f673008 00000000 b6f2fce8
+[   26.995590] dfc0: 00000000 bec62b90 7f673018 0000017b 7f673008 bec62d1c 00000003 7f673008
+[   27.003825] dfe0: bec62b58 bec62b48 7f656630 b6e6ba20 60010010 00000003 00000000 00000000
+[   27.012045] Backtrace:
+[   27.014559] [<bf0fd5fc>] (init_spi0_pinctrl [dynamic_spi_pnode]) from [<bf0fd030>] (spi_init+0x30/0x300 [dynamic_spi_pnode])
+[   27.025834]  r5:bf0fdb40 r4:bf0fdb48
+[   27.029488] [<bf0fd000>] (spi_init [dynamic_spi_pnode]) from [<c0009774>] (do_one_initcall+0xcc/0x210)
+[   27.038843]  r10:bf0fd940 r9:c6264088 r8:00000000 r7:c6264240 r6:c07ab268 r5:bf0fd000
+[   27.046786]  r4:c07ab268
+[   27.049369] [<c00096a8>] (do_one_initcall) from [<c00da5a4>] (do_init_module+0x74/0x1d4)
+[   27.057504]  r8:00000001 r7:bf0fd988 r6:c6264200 r5:00000001 r4:bf0fd940
+[   27.064327] [<c00da530>] (do_init_module) from [<c008c314>] (load_module+0x1db4/0x230c)
+[   27.072375]  r6:c6264080 r5:00000001 r4:c625df44
+[   27.077071] [<c008a560>] (load_module) from [<c008cac0>] (SyS_finit_module+0x9c/0xd8)
+[   27.084943]  r10:00000000 r9:c625c000 r8:c0010744 r7:0000017b r6:7f673008 r5:00000003
+[   27.092882]  r4:00000000
+[   27.095463] [<c008ca24>] (SyS_finit_module) from [<c00105a0>] (ret_fast_syscall+0x0/0x1c)
+[   27.103684]  r6:7f673018 r5:bec62b90 r4:00000000
+[   27.108379] Code: e3a01f8e e34404e1 eb3c7bf3 e3500000 (e5840000)
+[   27.114794] ---[ end trace 6d53b01fcad41710 ]---
+[   27.122959] Kernel panic - not syncing: Fatal exception
+[   27.146264] Rebooting in 1 seconds..
+LD:19223A
+
+IPL: M238,D3(11),20433A[2020-10-21 16:33:49],J5,PG1.x,SLC=256,RAM=128,RST=0
+BOOT:!GP3[0]@0,!GP3[10]@1,BIOS
+boot HBBIOS - please switch to BiosCtrlMP
+ipl done (82 ms)
+Bd** Initialize I2C-ChannelsÃBd** Initialize I2C-Channels

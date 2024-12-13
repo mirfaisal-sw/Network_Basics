@@ -1,0 +1,3 @@
+
+
+	https://gerrit1.harman.com/c/GTC_Foundation_Software/Development/Kernel/BSP/Linux/Samsung_KITT_EA/+/238068
