@@ -1,6 +1,0 @@
-#
-# DSPIPC configuration
-#
-config DSPIPC
-	tristate "DSPIPC"
-

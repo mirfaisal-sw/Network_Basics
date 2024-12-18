@@ -1,6 +1,0 @@
-#define CPU_INFORM_C1_V9		(0)
-#define CPU_INFORM_C2_V9		(1)
-#define CPU_INFORM_CPD_V9		(2)
-#define CPU_INFORM_SLEEP_V9		(3)
-#define CPU_INFORM_STOP_V9		(4)
-#define CPU_INFORM_POWERMODE_NUM_V9	(5)

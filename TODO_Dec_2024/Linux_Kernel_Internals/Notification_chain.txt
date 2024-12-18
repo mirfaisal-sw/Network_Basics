@@ -1,4 +1,0 @@
-
-
-
-Reference: -https://0xax.gitbooks.io/linux-insides/content/Concepts/linux-cpu-4.html

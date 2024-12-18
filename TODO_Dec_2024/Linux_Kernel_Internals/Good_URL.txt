@@ -1,4 +1,0 @@
-
-
-
-	https://0xax.gitbooks.io/linux-insides/content/Interrupts/linux-interrupts-9.html

@@ -1,7 +1,0 @@
-
-
-The PCIe protocol stack consists of several layers - 
-	- Physical Layer, 
-	- Data Link Layer, and 
-	- Transaction Layer. 
-

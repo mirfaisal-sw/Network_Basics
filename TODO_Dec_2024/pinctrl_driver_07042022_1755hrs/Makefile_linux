@@ -1,3 +1,0 @@
-obj-$(CONFIG_SPI_DYNAMIC_NODE)	+= dynamic_spi_pnode.o
-dynamic_spi_pnode-y := dynamic_spi_node.o spi_pinctrl.o
-
